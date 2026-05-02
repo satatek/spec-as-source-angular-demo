@@ -20,5 +20,6 @@
 2. Activate `Log off` and verify the welcome page appears with the sign-in action visible.
 3. After logging out, navigate to `/home` manually and verify the application does not render authenticated detail content.
 4. Simulate or mock a logout failure and verify a retryable error message is shown on the detail page.
-5. Run `npm run build` and `npm test -- --watch=false`.
-6. Optionally run `npm run test:e2e` after `npx playwright install` to confirm browser-level redirect boundaries.
+5. Retry the `Log off` action after a simulated failure and verify the page does not require a reload before the next attempt.
+6. Run `npm run build` and `npm test -- --watch=false`.
+7. Optionally run `npm run test:e2e` after `npx playwright install` to confirm browser-level login and logout redirect boundaries.

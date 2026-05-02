@@ -56,6 +56,34 @@ export class AuthFacade {
     });
   }
 
+  async logout(redirectTarget = '/'): Promise<void> {
+    const safeRedirectTarget = sanitizeAppRedirectTarget(redirectTarget, '/');
+    const currentProfile = this.profileState();
+
+    this.sessionState.update((session) => ({
+      ...session,
+      status: 'signing-out',
+      isAuthenticated: false,
+      lastErrorMessage: null,
+      redirectTarget: safeRedirectTarget,
+    }));
+
+    try {
+      await this.keycloak.logout({
+        redirectUri: `${window.location.origin}${safeRedirectTarget}`,
+      });
+    } catch (error) {
+      this.profileState.set(currentProfile);
+      this.sessionState.set({
+        status: 'error',
+        isAuthenticated: true,
+        loginUrlRequested: false,
+        lastErrorMessage: extractErrorMessage(error, 'Your sign out could not be completed. Please try again.'),
+        redirectTarget: '/home',
+      });
+    }
+  }
+
   clearError(): void {
     this.sessionState.update((session) => ({
       ...session,

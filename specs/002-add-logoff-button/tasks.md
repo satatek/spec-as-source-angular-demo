@@ -22,8 +22,8 @@
 
 **Purpose**: Prepare the authenticated detail surface and regression targets for the new logout flow
 
-- [ ] T001 Align the authenticated detail-page surface for logout work in `src/app/features/home/home-page.component.ts`, `src/app/features/home/home-page.component.html`, and `src/app/features/home/home-page.models.ts`
-- [ ] T002 [P] Prepare logout regression targets in `src/app/features/home/home-page.component.spec.ts`, `src/app/core/auth/auth.facade.spec.ts`, `src/app/core/auth/auth.guard.spec.ts`, and `src/app/app.routes.spec.ts`
+- [X] T001 Align the authenticated detail-page surface for logout work in `src/app/features/home/home-page.component.ts`, `src/app/features/home/home-page.component.html`, and `src/app/features/home/home-page.models.ts`
+- [X] T002 [P] Prepare logout regression targets in `src/app/features/home/home-page.component.spec.ts`, `src/app/core/auth/auth.facade.spec.ts`, `src/app/core/auth/auth.guard.spec.ts`, and `src/app/app.routes.spec.ts`
 
 ---
 
@@ -33,10 +33,10 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Extend logout-related auth state contracts in `src/app/core/auth/auth.models.ts` and `src/app/features/home/home-page.models.ts`
-- [ ] T004 Implement the shared logout contract in `src/app/core/auth/auth.facade.ts`
-- [ ] T005 Preserve post-logout anonymous route protection in `src/app/core/auth/auth.guard.ts` and `src/app/app.routes.ts`
-- [ ] T006 Add shared logout feedback state wiring in `src/app/features/home/home-page.component.ts` and `src/app/features/home/home-page.models.ts`
+- [X] T003 Extend logout-related auth state contracts in `src/app/core/auth/auth.models.ts` and `src/app/features/home/home-page.models.ts`
+- [X] T004 Implement the shared logout contract in `src/app/core/auth/auth.facade.ts`
+- [X] T005 Preserve post-logout anonymous route protection in `src/app/core/auth/auth.guard.ts` and `src/app/app.routes.ts`
+- [X] T006 Add shared logout feedback state wiring in `src/app/features/home/home-page.component.ts` and `src/app/features/home/home-page.models.ts`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -50,15 +50,15 @@
 
 ### Tests for User Story 1
 
-- [ ] T007 [P] [US1] Add component coverage for logout button rendering and click handling in `src/app/features/home/home-page.component.spec.ts`
-- [ ] T008 [P] [US1] Add auth-facade coverage for successful provider logout and welcome-page redirect intent in `src/app/core/auth/auth.facade.spec.ts`
+- [X] T007 [P] [US1] Add component coverage for logout button rendering and click handling in `src/app/features/home/home-page.component.spec.ts`
+- [X] T008 [P] [US1] Add auth-facade coverage for successful provider logout and welcome-page redirect intent in `src/app/core/auth/auth.facade.spec.ts`
 
 ### Implementation for User Story 1
 
-- [ ] T009 [P] [US1] Extend the detail-page view model for logout action state in `src/app/features/home/home-page.models.ts`
-- [ ] T010 [US1] Implement successful logout teardown and redirect handling in `src/app/core/auth/auth.facade.ts`
-- [ ] T011 [US1] Add the visible `Log off` action and in-progress UI state in `src/app/features/home/home-page.component.html` and `src/app/features/home/home-page.component.scss`
-- [ ] T012 [US1] Wire the home-page logout action to the auth facade in `src/app/features/home/home-page.component.ts`
+- [X] T009 [P] [US1] Extend the detail-page view model for logout action state in `src/app/features/home/home-page.models.ts`
+- [X] T010 [US1] Implement successful logout teardown and redirect handling in `src/app/core/auth/auth.facade.ts`
+- [X] T011 [US1] Add the visible `Log off` action and in-progress UI state in `src/app/features/home/home-page.component.html` and `src/app/features/home/home-page.component.scss`
+- [X] T012 [US1] Wire the home-page logout action to the auth facade in `src/app/features/home/home-page.component.ts`
 
 **Checkpoint**: User Story 1 should be fully functional and testable independently
 
@@ -72,14 +72,14 @@
 
 ### Tests for User Story 2
 
-- [ ] T013 [P] [US2] Add guard and route regression coverage for anonymous access after logout in `src/app/core/auth/auth.guard.spec.ts` and `src/app/app.routes.spec.ts`
-- [ ] T014 [P] [US2] Add home-page regression coverage that profile details do not persist after logout in `src/app/features/home/home-page.component.spec.ts`
+- [X] T013 [P] [US2] Add guard and route regression coverage for anonymous access after logout in `src/app/core/auth/auth.guard.spec.ts` and `src/app/app.routes.spec.ts`
+- [X] T014 [P] [US2] Add home-page regression coverage that profile details do not persist after logout in `src/app/features/home/home-page.component.spec.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T015 [US2] Clear authenticated profile and session state on logout completion in `src/app/core/auth/auth.facade.ts`
-- [ ] T016 [US2] Ensure the post-logout redirect target resolves to the welcome page in `src/app/core/auth/auth.facade.ts` and `src/app/core/auth/redirect.utils.ts`
-- [ ] T017 [US2] Preserve `/home` route protection for anonymous revisits in `src/app/core/auth/auth.guard.ts` and `src/app/app.routes.ts`
+- [X] T015 [US2] Clear authenticated profile and session state on logout completion in `src/app/core/auth/auth.facade.ts`
+- [X] T016 [US2] Ensure the post-logout redirect target resolves to the welcome page in `src/app/core/auth/auth.facade.ts` and `src/app/core/auth/redirect.utils.ts`
+- [X] T017 [US2] Preserve `/home` route protection for anonymous revisits in `src/app/core/auth/auth.guard.ts` and `src/app/app.routes.ts`
 
 **Checkpoint**: User Stories 1 and 2 should both work independently
 
@@ -93,14 +93,14 @@
 
 ### Tests for User Story 3
 
-- [ ] T018 [P] [US3] Add component coverage for logout failure messaging and retry behavior in `src/app/features/home/home-page.component.spec.ts`
-- [ ] T019 [P] [US3] Add auth-facade coverage for failed logout attempts in `src/app/core/auth/auth.facade.spec.ts`
+- [X] T018 [P] [US3] Add component coverage for logout failure messaging and retry behavior in `src/app/features/home/home-page.component.spec.ts`
+- [X] T019 [P] [US3] Add auth-facade coverage for failed logout attempts in `src/app/core/auth/auth.facade.spec.ts`
 
 ### Implementation for User Story 3
 
-- [ ] T020 [P] [US3] Extend typed logout failure and retry state in `src/app/core/auth/auth.models.ts` and `src/app/features/home/home-page.models.ts`
-- [ ] T021 [US3] Implement recoverable failed-logout handling in `src/app/core/auth/auth.facade.ts`
-- [ ] T022 [US3] Render retryable logout error feedback and re-enabled action states in `src/app/features/home/home-page.component.ts`, `src/app/features/home/home-page.component.html`, and `src/app/features/home/home-page.component.scss`
+- [X] T020 [P] [US3] Extend typed logout failure and retry state in `src/app/core/auth/auth.models.ts` and `src/app/features/home/home-page.models.ts`
+- [X] T021 [US3] Implement recoverable failed-logout handling in `src/app/core/auth/auth.facade.ts`
+- [X] T022 [US3] Render retryable logout error feedback and re-enabled action states in `src/app/features/home/home-page.component.ts`, `src/app/features/home/home-page.component.html`, and `src/app/features/home/home-page.component.scss`
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -110,9 +110,9 @@
 
 **Purpose**: Final hardening, documentation, and end-to-end validation across the logout flow
 
-- [ ] T023 [P] Update browser smoke coverage for logout from `/home` in `e2e/auth-flow.spec.ts`
-- [ ] T024 [P] Document logout behavior and validation steps in `README.md` and `specs/002-add-logoff-button/quickstart.md`
-- [ ] T025 Run logout quickstart validation and capture any required adjustments in `specs/002-add-logoff-button/quickstart.md`
+- [X] T023 [P] Update browser smoke coverage for logout from `/home` in `e2e/auth-flow.spec.ts`
+- [X] T024 [P] Document logout behavior and validation steps in `README.md` and `specs/002-add-logoff-button/quickstart.md`
+- [X] T025 Run logout quickstart validation and capture any required adjustments in `specs/002-add-logoff-button/quickstart.md`
 
 ---
 

@@ -8,6 +8,7 @@ import { KeycloakProfileViewModel } from '../../core/auth/profile.models';
 
 describe('HomePageComponent', () => {
   const ensureProfileLoaded = vi.fn(async () => null);
+  const logout = vi.fn(async (_redirectTarget?: string) => undefined);
   const session = signal({
     status: 'authenticated',
     isAuthenticated: true,
@@ -20,6 +21,7 @@ describe('HomePageComponent', () => {
 
   beforeEach(async () => {
     ensureProfileLoaded.mockClear();
+    logout.mockClear();
     profile.set({
       subject: 'user-123',
       displayName: 'Casey Rivers',
@@ -41,6 +43,7 @@ describe('HomePageComponent', () => {
             profile,
             isProfileLoading,
             ensureProfileLoaded,
+            logout,
           },
         },
       ],
@@ -60,6 +63,18 @@ describe('HomePageComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Welcome, Casey Rivers.');
     expect(compiled.textContent).toContain('casey@example.com');
+    expect(compiled.textContent).toContain('Log off');
+  });
+
+  it('starts logout from the authenticated detail page', async () => {
+    const fixture = TestBed.createComponent(HomePageComponent);
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button[mat-flat-button]') as HTMLButtonElement;
+    button.click();
+    await fixture.whenStable();
+
+    expect(logout).toHaveBeenCalledWith('/');
   });
 
   it('shows a fallback warning when profile data is incomplete', () => {
@@ -79,5 +94,40 @@ describe('HomePageComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Some profile fields are not available from Keycloak');
     expect(compiled.textContent).toContain('Not provided');
+  });
+
+  it('shows retryable logout feedback and disables the action while sign-out is in progress', () => {
+    session.set({
+      ...session(),
+      status: 'signing-out',
+      lastErrorMessage: 'Your sign out could not be completed. Please try again.',
+    });
+
+    const fixture = TestBed.createComponent(HomePageComponent);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const button = compiled.querySelector('button[mat-flat-button]') as HTMLButtonElement;
+
+    expect(button.disabled).toBe(true);
+    expect(compiled.textContent).toContain('Signing you out and returning to the welcome page');
+    expect(compiled.textContent).not.toContain('Your sign out could not be completed. Please try again.');
+  });
+
+  it('shows a recoverable logout error once sign-out fails', () => {
+    session.set({
+      ...session(),
+      status: 'error',
+      lastErrorMessage: 'Your sign out could not be completed. Please try again.',
+    });
+
+    const fixture = TestBed.createComponent(HomePageComponent);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const button = compiled.querySelector('button[mat-flat-button]') as HTMLButtonElement;
+
+    expect(button.disabled).toBe(false);
+    expect(compiled.textContent).toContain('Your sign out could not be completed. Please try again.');
   });
 });
