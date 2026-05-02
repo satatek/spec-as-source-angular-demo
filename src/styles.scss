@@ -1,0 +1,41 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$primary-palette: mat.$azure-palette;
+$tertiary-palette: mat.$blue-palette;
+
+$theme: mat.define-theme((
+	color: (
+		theme-type: light,
+		primary: $primary-palette,
+		tertiary: $tertiary-palette,
+	),
+	density: (
+		scale: 0,
+	),
+));
+
+html {
+	@include mat.theme($theme);
+	color-scheme: light;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: Inter, 'Segoe UI', sans-serif;
+	background: #eef2f7;
+	color: #162033;
+}
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}

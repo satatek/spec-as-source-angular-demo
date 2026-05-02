@@ -22,10 +22,10 @@
 
 **Purpose**: Initialize the Angular 21 application and required UI/auth dependencies
 
-- [ ] T001 Initialize the Angular 21 workspace in `package.json`, `angular.json`, `tsconfig.json`, `tsconfig.app.json`, and `tsconfig.spec.json`
-- [ ] T002 Create the application entry files in `src/main.ts`, `src/index.html`, and `src/styles.scss`
-- [ ] T003 [P] Add Keycloak and Angular Material dependencies in `package.json`
-- [ ] T004 [P] Configure Angular Material theme, typography, and browser animations in `src/styles.scss` and `src/app/app.config.ts`
+- [X] T001 Initialize the Angular 21 workspace in `package.json`, `angular.json`, `tsconfig.json`, `tsconfig.app.json`, and `tsconfig.spec.json`
+- [X] T002 Create the application entry files in `src/main.ts`, `src/index.html`, and `src/styles.scss`
+- [X] T003 [P] Add Keycloak and Angular Material dependencies in `package.json`
+- [X] T004 [P] Configure Angular Material theme, typography, and browser animations in `src/styles.scss` and `src/app/app.config.ts`
 
 ---
 
@@ -35,13 +35,13 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 Create the application shell and router outlet in `src/app/app.component.ts`, `src/app/app.component.html`, and `src/app/app.component.scss`
-- [ ] T006 [P] Define shared auth and profile contracts in `src/app/core/auth/auth.models.ts` and `src/app/core/auth/profile.models.ts`
-- [ ] T007 [P] Add the Keycloak silent check asset in `src/assets/silent-check-sso.html`
-- [ ] T008 Implement Keycloak provider and interceptor configuration in `src/app/core/keycloak/keycloak.config.ts` and wire it in `src/app/app.config.ts`
-- [ ] T009 Implement the auth facade for session bootstrap, login, logout-safe state clearing, and profile loading in `src/app/core/auth/auth.facade.ts`
-- [ ] T010 Implement the authenticated-route guard in `src/app/core/auth/auth.guard.ts`
-- [ ] T011 Create the base route map in `src/app/app.routes.ts`
+- [X] T005 Create the application shell and router outlet in `src/app/app.component.ts`, `src/app/app.component.html`, and `src/app/app.component.scss`
+- [X] T006 [P] Define shared auth and profile contracts in `src/app/core/auth/auth.models.ts` and `src/app/core/auth/profile.models.ts`
+- [X] T007 [P] Add the Keycloak silent check asset in `src/assets/silent-check-sso.html`
+- [X] T008 Implement Keycloak provider and interceptor configuration in `src/app/core/keycloak/keycloak.config.ts` and wire it in `src/app/app.config.ts`
+- [X] T009 Implement the auth facade for session bootstrap, login, logout-safe state clearing, and profile loading in `src/app/core/auth/auth.facade.ts`
+- [X] T010 Implement the authenticated-route guard in `src/app/core/auth/auth.guard.ts`
+- [X] T011 Create the base route map in `src/app/app.routes.ts`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -55,16 +55,16 @@
 
 ### Tests for User Story 1
 
-- [ ] T012 [P] [US1] Add component coverage for the public welcome page in `src/app/features/welcome/welcome-page.component.spec.ts`
-- [ ] T013 [P] [US1] Add router/auth integration coverage for public entry and login handoff in `src/app/app.routes.spec.ts`
+- [X] T012 [P] [US1] Add component coverage for the public welcome page in `src/app/features/welcome/welcome-page.component.spec.ts`
+- [X] T013 [P] [US1] Add router/auth integration coverage for public entry and login handoff in `src/app/app.routes.spec.ts`
 
 ### Implementation for User Story 1
 
-- [ ] T014 [P] [US1] Create the welcome page component in `src/app/features/welcome/welcome-page.component.ts`
-- [ ] T015 [P] [US1] Create the welcome page template and styles in `src/app/features/welcome/welcome-page.component.html` and `src/app/features/welcome/welcome-page.component.scss`
-- [ ] T016 [US1] Implement welcome-page login action and recoverable auth-status messaging in `src/app/features/welcome/welcome-page.facade.ts`
-- [ ] T017 [US1] Wire the root route to the welcome page and anonymous redirect behavior in `src/app/app.routes.ts`
-- [ ] T018 [US1] Add accessible loading, retry, and login CTA states to the welcome page in `src/app/features/welcome/welcome-page.component.html` and `src/app/features/welcome/welcome-page.component.scss`
+- [X] T014 [P] [US1] Create the welcome page component in `src/app/features/welcome/welcome-page.component.ts`
+- [X] T015 [P] [US1] Create the welcome page template and styles in `src/app/features/welcome/welcome-page.component.html` and `src/app/features/welcome/welcome-page.component.scss`
+- [X] T016 [US1] Implement welcome-page login action and recoverable auth-status messaging in `src/app/features/welcome/welcome-page.facade.ts`
+- [X] T017 [US1] Wire the root route to the welcome page and anonymous redirect behavior in `src/app/app.routes.ts`
+- [X] T018 [US1] Add accessible loading, retry, and login CTA states to the welcome page in `src/app/features/welcome/welcome-page.component.html` and `src/app/features/welcome/welcome-page.component.scss`
 
 **Checkpoint**: User Story 1 should be fully functional and testable independently
 
@@ -78,17 +78,17 @@
 
 ### Tests for User Story 2
 
-- [ ] T019 [P] [US2] Add component coverage for personalized home rendering in `src/app/features/home/home-page.component.spec.ts`
-- [ ] T020 [P] [US2] Add integration coverage for successful auth redirect and profile loading in `src/app/core/auth/auth.facade.spec.ts`
+- [X] T019 [P] [US2] Add component coverage for personalized home rendering in `src/app/features/home/home-page.component.spec.ts`
+- [X] T020 [P] [US2] Add integration coverage for successful auth redirect and profile loading in `src/app/core/auth/auth.facade.spec.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T021 [P] [US2] Create normalized home view models and mappers in `src/app/features/home/home-page.models.ts`
-- [ ] T022 [P] [US2] Create the protected home page component in `src/app/features/home/home-page.component.ts`
-- [ ] T023 [P] [US2] Create the home page template and styles in `src/app/features/home/home-page.component.html` and `src/app/features/home/home-page.component.scss`
-- [ ] T024 [US2] Implement post-login redirect and Keycloak profile retrieval in `src/app/core/auth/auth.facade.ts`
-- [ ] T025 [US2] Wire the protected `/home` route with the auth guard in `src/app/app.routes.ts`
-- [ ] T026 [US2] Render the personalized greeting and profile details with Angular Material in `src/app/features/home/home-page.component.html` and `src/app/features/home/home-page.component.ts`
+- [X] T021 [P] [US2] Create normalized home view models and mappers in `src/app/features/home/home-page.models.ts`
+- [X] T022 [P] [US2] Create the protected home page component in `src/app/features/home/home-page.component.ts`
+- [X] T023 [P] [US2] Create the home page template and styles in `src/app/features/home/home-page.component.html` and `src/app/features/home/home-page.component.scss`
+- [X] T024 [US2] Implement post-login redirect and Keycloak profile retrieval in `src/app/core/auth/auth.facade.ts`
+- [X] T025 [US2] Wire the protected `/home` route with the auth guard in `src/app/app.routes.ts`
+- [X] T026 [US2] Render the personalized greeting and profile details with Angular Material in `src/app/features/home/home-page.component.html` and `src/app/features/home/home-page.component.ts`
 
 **Checkpoint**: User Stories 1 and 2 should both work independently
 
@@ -102,15 +102,15 @@
 
 ### Tests for User Story 3
 
-- [ ] T027 [P] [US3] Add component coverage for home-page fallback and warning states in `src/app/features/home/home-page.component.spec.ts`
-- [ ] T028 [P] [US3] Add guard/session integration coverage for anonymous and expired-session redirects in `src/app/core/auth/auth.guard.spec.ts`
+- [X] T027 [P] [US3] Add component coverage for home-page fallback and warning states in `src/app/features/home/home-page.component.spec.ts`
+- [X] T028 [P] [US3] Add guard/session integration coverage for anonymous and expired-session redirects in `src/app/core/auth/auth.guard.spec.ts`
 
 ### Implementation for User Story 3
 
-- [ ] T029 [P] [US3] Extend auth failure and fallback contracts in `src/app/core/auth/auth.models.ts` and `src/app/features/home/home-page.models.ts`
-- [ ] T030 [US3] Implement expired-session recovery and anonymous redirect handling in `src/app/core/auth/auth.guard.ts` and `src/app/core/auth/auth.facade.ts`
-- [ ] T031 [US3] Implement partial-profile fallback messaging in `src/app/features/home/home-page.component.ts` and `src/app/features/home/home-page.component.html`
-- [ ] T032 [US3] Surface cancelled-login and retry guidance on the welcome page in `src/app/features/welcome/welcome-page.component.ts` and `src/app/features/welcome/welcome-page.component.html`
+- [X] T029 [P] [US3] Extend auth failure and fallback contracts in `src/app/core/auth/auth.models.ts` and `src/app/features/home/home-page.models.ts`
+- [X] T030 [US3] Implement expired-session recovery and anonymous redirect handling in `src/app/core/auth/auth.guard.ts` and `src/app/core/auth/auth.facade.ts`
+- [X] T031 [US3] Implement partial-profile fallback messaging in `src/app/features/home/home-page.component.ts` and `src/app/features/home/home-page.component.html`
+- [X] T032 [US3] Surface cancelled-login and retry guidance on the welcome page in `src/app/features/welcome/welcome-page.component.ts` and `src/app/features/welcome/welcome-page.component.html`
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -120,10 +120,10 @@
 
 **Purpose**: Final hardening, documentation, and scenario validation across the full flow
 
-- [ ] T033 [P] Document local Keycloak setup, redirect URIs, and run steps in `README.md` and `specs/001-add-keycloak-auth/quickstart.md`
-- [ ] T034 [P] Add focused e2e smoke coverage for the anonymous-to-login and authenticated-home journeys in `e2e/auth-flow.spec.ts`
-- [ ] T035 Harden Keycloak config boundaries and redirect handling in `src/app/core/keycloak/keycloak.config.ts` and `src/app/core/auth/auth.guard.ts`
-- [ ] T036 Run the quickstart validation and capture any required adjustments in `specs/001-add-keycloak-auth/quickstart.md`
+- [X] T033 [P] Document local Keycloak setup, redirect URIs, and run steps in `README.md` and `specs/001-add-keycloak-auth/quickstart.md`
+- [X] T034 [P] Add focused e2e smoke coverage for the anonymous-to-login and authenticated-home journeys in `e2e/auth-flow.spec.ts`
+- [X] T035 Harden Keycloak config boundaries and redirect handling in `src/app/core/keycloak/keycloak.config.ts` and `src/app/core/auth/auth.guard.ts`
+- [X] T036 Run the quickstart validation and capture any required adjustments in `specs/001-add-keycloak-auth/quickstart.md`
 
 ---
 

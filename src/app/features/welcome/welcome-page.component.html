@@ -1,0 +1,37 @@
+<section class="welcome-page">
+  <mat-card class="hero-card" appearance="outlined">
+    <p class="eyebrow">Angular 21 + Keycloak</p>
+    <h1>Welcome to the local demo application</h1>
+    <p class="supporting-copy">
+      Start authentication from this public page, then return to a protected home experience with
+      your Keycloak profile rendered inside the Angular application.
+    </p>
+
+    @if (facade.errorMessage(); as errorMessage) {
+      <div class="status-banner" role="status" aria-live="polite">
+        <strong>Sign-in did not complete.</strong>
+        <span>{{ errorMessage }}</span>
+        <button mat-stroked-button type="button" (click)="facade.dismissError()">Dismiss</button>
+      </div>
+    }
+
+    @if (facade.isChecking()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+
+    <div class="actions">
+      <button mat-flat-button type="button" (click)="signIn()" [disabled]="facade.isChecking()">
+        Sign in with Keycloak
+      </button>
+    </div>
+  </mat-card>
+
+  <mat-card class="details-card" appearance="outlined">
+    <h2>What happens next</h2>
+    <ol>
+      <li>The app checks whether a Keycloak session already exists.</li>
+      <li>If you choose to continue, the login flow redirects to the local Keycloak realm.</li>
+      <li>After authentication, the app returns to the protected home page and loads your profile.</li>
+    </ol>
+  </mat-card>
+</section>
