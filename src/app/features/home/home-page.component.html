@@ -1,0 +1,33 @@
+<section class="home-page">
+  <mat-card class="summary-card" appearance="outlined">
+    <p class="eyebrow">Protected route</p>
+    <h1>{{ viewState().greeting }}</h1>
+    <p class="supporting-copy">
+      This screen is only available to authenticated users and renders Keycloak profile data loaded by the SPA.
+    </p>
+
+    @if (isProfileLoading()) {
+      <div class="loading-state" role="status" aria-live="polite">
+        <mat-spinner diameter="40" />
+        <span>Loading your Keycloak profile…</span>
+      </div>
+    }
+
+    @if (viewState().profileWarning; as warning) {
+      <div class="warning-state" role="status" aria-live="polite">{{ warning }}</div>
+    }
+  </mat-card>
+
+  <mat-card class="profile-card" appearance="outlined">
+    <h2>Profile details</h2>
+
+    <mat-list>
+      @for (field of viewState().profileFields; track field.label) {
+        <mat-list-item>
+          <div matListItemTitle>{{ field.label }}</div>
+          <div matListItemLine [class.missing]="field.missing">{{ field.value }}</div>
+        </mat-list-item>
+      }
+    </mat-list>
+  </mat-card>
+</section>

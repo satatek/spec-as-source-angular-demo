@@ -1,0 +1,74 @@
+.welcome-page {
+  min-height: 100vh;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 42rem);
+  justify-content: center;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  background:
+    radial-gradient(circle at top left, rgba(97, 107, 255, 0.18), transparent 28%),
+    linear-gradient(180deg, #f7f8fc 0%, #eef2f7 100%);
+}
+
+.hero-card,
+.details-card {
+  border-radius: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: 0 1.25rem 2.5rem rgba(15, 23, 42, 0.08);
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5b5bd6;
+}
+
+h1,
+h2 {
+  margin: 0;
+  color: #162033;
+}
+
+.supporting-copy {
+  margin: 1rem 0 1.5rem;
+  color: #43506a;
+  line-height: 1.6;
+}
+
+.status-banner {
+  display: grid;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #fff4df;
+  color: #6d4c00;
+}
+
+.actions {
+  margin-top: 1.25rem;
+}
+
+ol {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  color: #43506a;
+  line-height: 1.7;
+}
+
+button[mat-flat-button] {
+  min-width: 14rem;
+}
+
+@media (max-width: 640px) {
+  .welcome-page {
+    padding: 1rem;
+  }
+
+  button[mat-flat-button] {
+    width: 100%;
+  }
+}

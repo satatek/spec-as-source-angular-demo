@@ -186,6 +186,57 @@ Right now, the README defines the challenge clearly:
 - apply it to Angular
 - measure whether the workflow still holds under a stricter frontend architecture
 
+## Local Demo Flow
+
+The first implemented feature in this repository is a local Angular 21 + Keycloak demo.
+
+It provides:
+
+- a public welcome page with a Keycloak login action
+- a protected `/home` route
+- a personalized post-login greeting
+- Keycloak profile details rendered in Angular Material cards and lists
+
+### Local Requirements
+
+- Node.js 24+
+- npm 11+
+- a Keycloak server at `http://localhost:8080/`
+- realm `local-demo`
+- public client `angular-local-demo`
+
+### Run Locally
+
+```bash
+npm install
+npm start
+```
+
+Open `http://localhost:4200/` and use the welcome page to trigger the Keycloak flow.
+
+### Validation
+
+```bash
+npm run build
+npm test -- --watch=false
+```
+
+Optional browser smoke coverage:
+
+```bash
+npx playwright install
+npm run test:e2e
+```
+
+If you want the smoke suite to exercise a real Keycloak login, provide:
+
+- `KEYCLOAK_E2E_USERNAME`
+- `KEYCLOAK_E2E_PASSWORD`
+
+### Version Note
+
+The target Keycloak server for this demo is `26.6.1`. The npm package `keycloak-js@26.6.1` is not published, so the application uses the latest published 26.x client release, `26.2.4`, which remains within the supported 26.x compatibility range for `keycloak-angular` 21.
+
 ## Closing Thought
 
 ```text
