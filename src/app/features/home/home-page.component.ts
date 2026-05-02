@@ -19,9 +19,13 @@ export class HomePageComponent {
   readonly session = this.authFacade.session;
   readonly profile = this.authFacade.profile;
   readonly isProfileLoading = this.authFacade.isProfileLoading;
-  readonly viewState = computed(() => buildHomePageState(this.profile()));
+  readonly viewState = computed(() => buildHomePageState(this.profile(), this.session()));
 
   constructor() {
     void this.authFacade.ensureProfileLoaded();
+  }
+
+  async signOut(): Promise<void> {
+    await this.authFacade.logout('/');
   }
 }

@@ -11,6 +11,7 @@ describe('AuthFacade', () => {
     subject: string | undefined;
     tokenParsed: Record<string, unknown>;
     login: ReturnType<typeof vi.fn>;
+    logout: ReturnType<typeof vi.fn>;
     updateToken: ReturnType<typeof vi.fn>;
     loadUserProfile: ReturnType<typeof vi.fn>;
     clearToken: ReturnType<typeof vi.fn>;
@@ -26,6 +27,7 @@ describe('AuthFacade', () => {
         email_verified: true,
       },
       login: vi.fn(async () => undefined),
+      logout: vi.fn(async () => undefined),
       updateToken: vi.fn(async () => true),
       loadUserProfile: vi.fn(async () => ({
         username: 'casey',
@@ -64,6 +66,36 @@ describe('AuthFacade', () => {
     expect(keycloakMock.updateToken).toHaveBeenCalledWith(30);
     expect(profile?.displayName).toBe('Casey Rivers');
     expect(profile?.email).toBe('casey@example.com');
+  });
+
+  it('starts provider logout and clears local profile state before redirecting to the welcome page', async () => {
+    const facade = TestBed.inject(AuthFacade);
+
+    await facade.ensureProfileLoaded();
+    const profile = facade.profile();
+    await facade.logout();
+
+    expect(keycloakMock.logout).toHaveBeenCalledWith({
+      redirectUri: `${window.location.origin}/`,
+    });
+    expect(facade.profile()).toBe(profile);
+    expect(facade.session().status).toBe('signing-out');
+    expect(facade.session().redirectTarget).toBe('/');
+  });
+
+  it('surfaces a retryable error when provider logout fails', async () => {
+    keycloakMock.logout.mockRejectedValueOnce(new Error('logout failure'));
+    const facade = TestBed.inject(AuthFacade);
+
+    await facade.ensureProfileLoaded();
+    const profile = facade.profile();
+    await facade.logout();
+
+    expect(facade.session().status).toBe('error');
+    expect(facade.session().isAuthenticated).toBe(true);
+    expect(facade.session().lastErrorMessage).toBe('logout failure');
+    expect(facade.session().redirectTarget).toBe('/home');
+    expect(facade.profile()).toBe(profile);
   });
 
   it('clears the session and returns to the welcome page when profile loading fails', async () => {

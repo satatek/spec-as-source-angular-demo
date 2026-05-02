@@ -27,5 +27,11 @@ test.describe('Keycloak authentication flow', () => {
     await expect(page).toHaveURL(/\/home$/);
     await expect(page.getByRole('heading', { name: /welcome,/i })).toBeVisible();
     await expect(page.getByText(/profile details/i)).toBeVisible();
+    await expect(page.getByRole('button', { name: /log off/i })).toBeVisible();
+
+    await page.getByRole('button', { name: /log off/i }).click();
+
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.getByRole('button', { name: /sign in with keycloak/i })).toBeVisible();
   });
 });

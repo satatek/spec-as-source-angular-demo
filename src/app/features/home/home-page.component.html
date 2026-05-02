@@ -6,6 +6,17 @@
       This screen is only available to authenticated users and renders Keycloak profile data loaded by the SPA.
     </p>
 
+    <div class="actions">
+      <button
+        mat-flat-button
+        type="button"
+        (click)="signOut()"
+        [disabled]="!viewState().canLogoff"
+      >
+        Log off
+      </button>
+    </div>
+
     @if (isProfileLoading()) {
       <div class="loading-state" role="status" aria-live="polite">
         <mat-spinner diameter="40" />
@@ -13,8 +24,19 @@
       </div>
     }
 
+    @if (viewState().isLogoffInProgress) {
+      <div class="loading-state" role="status" aria-live="polite">
+        <mat-spinner diameter="32" />
+        <span>Signing you out and returning to the welcome page…</span>
+      </div>
+    }
+
     @if (viewState().profileWarning; as warning) {
       <div class="warning-state" role="status" aria-live="polite">{{ warning }}</div>
+    }
+
+    @if (viewState().logoffErrorMessage; as logoffErrorMessage) {
+      <div class="warning-state" role="status" aria-live="polite">{{ logoffErrorMessage }}</div>
     }
   </mat-card>
 

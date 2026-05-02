@@ -196,6 +196,7 @@ It provides:
 - a protected `/home` route
 - a personalized post-login greeting
 - Keycloak profile details rendered in Angular Material cards and lists
+- a log off action on the authenticated detail page that returns users to the welcome page
 
 ### Local Requirements
 
@@ -213,6 +214,7 @@ npm start
 ```
 
 Open `http://localhost:4200/` and use the welcome page to trigger the Keycloak flow.
+After login, the authenticated detail page at `/home` also exposes a `Log off` button that ends the session and returns to `/`.
 
 ### Validation
 
@@ -232,6 +234,8 @@ If you want the smoke suite to exercise a real Keycloak login, provide:
 
 - `KEYCLOAK_E2E_USERNAME`
 - `KEYCLOAK_E2E_PASSWORD`
+
+The browser smoke test now also verifies the authenticated `Log off` action when those credentials are available.
 
 ### Version Note
 

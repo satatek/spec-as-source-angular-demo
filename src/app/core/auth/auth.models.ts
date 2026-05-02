@@ -1,4 +1,4 @@
-export type SessionStatus = 'checking' | 'authenticated' | 'anonymous' | 'error';
+export type SessionStatus = 'checking' | 'signing-out' | 'authenticated' | 'anonymous' | 'error';
 
 export interface AuthSessionState {
   status: SessionStatus;

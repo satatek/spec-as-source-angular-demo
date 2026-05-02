@@ -1,3 +1,4 @@
+import { AuthSessionState } from '../../core/auth/auth.models';
 import { KeycloakProfileViewModel } from '../../core/auth/profile.models';
 
 export interface HomeProfileField {
@@ -10,14 +11,23 @@ export interface HomePageState {
   greeting: string;
   profileFields: HomeProfileField[];
   profileWarning: string | null;
+  canLogoff: boolean;
+  isLogoffInProgress: boolean;
+  logoffErrorMessage: string | null;
 }
 
-export function buildHomePageState(profile: KeycloakProfileViewModel | null): HomePageState {
+export function buildHomePageState(
+  profile: KeycloakProfileViewModel | null,
+  session: AuthSessionState
+): HomePageState {
   if (!profile) {
     return {
       greeting: 'Welcome back.',
       profileFields: [],
       profileWarning: 'We could not load your Keycloak profile yet.',
+      canLogoff: session.status !== 'signing-out',
+      isLogoffInProgress: session.status === 'signing-out',
+      logoffErrorMessage: session.status === 'error' && session.isAuthenticated ? session.lastErrorMessage : null,
     };
   }
 
@@ -43,6 +53,9 @@ export function buildHomePageState(profile: KeycloakProfileViewModel | null): Ho
       missingCount > 0
         ? 'Some profile fields are not available from Keycloak for this account.'
         : null,
+    canLogoff: session.status !== 'signing-out',
+    isLogoffInProgress: session.status === 'signing-out',
+    logoffErrorMessage: session.status === 'error' && session.isAuthenticated ? session.lastErrorMessage : null,
   };
 }
 
