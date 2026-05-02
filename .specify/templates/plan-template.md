@@ -17,21 +17,31 @@
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
+**Language/Version**: [e.g., TypeScript 5.x, Angular 20.x or NEEDS CLARIFICATION]  
+**Primary Dependencies**: [e.g., Angular, RxJS, Angular Router, Angular Forms or NEEDS CLARIFICATION]  
 **Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Testing**: [e.g., Angular unit/component tests, integration tests, Playwright or NEEDS CLARIFICATION]  
+**Target Platform**: [e.g., modern web browsers, responsive web app or NEEDS CLARIFICATION]
+**Project Type**: [e.g., Angular web app, Angular library, Angular + API system or NEEDS CLARIFICATION]  
+**Performance Goals**: [domain-specific, e.g., first route interactive under 2s, route transitions under 200ms or NEEDS CLARIFICATION]  
+**Constraints**: [domain-specific, e.g., strict typing, accessible interactions, SSR compatibility or NEEDS CLARIFICATION]  
+**Scale/Scope**: [domain-specific, e.g., 10 feature areas, 30 routes, 3 user roles or NEEDS CLARIFICATION]
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- **Spec First, Always**: Link every planned implementation slice to at least one
+  requirement or scenario from `spec.md`.
+- **Angular-Idiomatic by Default**: Confirm the design uses Angular-native
+  primitives before introducing custom wrappers or framework mixing.
+- **Strong Typing and Contracts**: List the explicit contracts that will need types
+  such as DTOs, route data, form models, and service interfaces.
+- **Test at the Right Level**: Identify the lowest-cost test layer that proves each
+  critical behavior and note any required regression coverage.
+- **Architectural Simplicity**: Record any added layers, shared state, or
+  abstractions and justify them in Complexity Tracking if they are not the
+  simplest viable option.
 
 ## Project Structure
 
@@ -56,39 +66,37 @@ specs/[###-feature]/
 -->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
+# [REMOVE IF UNUSED] Option 1: Angular single application (DEFAULT)
 src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+├── app/
+│   ├── core/
+│   ├── features/
+│   ├── shared/
+│   └── app.routes.ts
+├── assets/
+└── styles/
 
-tests/
-├── contract/
-├── integration/
-└── unit/
+e2e/
 
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
+# [REMOVE IF UNUSED] Option 2: Angular frontend + API
 frontend/
 ├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
+│   ├── app/
+│   │   ├── core/
+│   │   ├── features/
+│   │   ├── shared/
+│   │   └── app.routes.ts
+│   └── assets/
+└── e2e/
+
+backend/
+├── src/
 └── tests/
 
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+# [REMOVE IF UNUSED] Option 3: Angular workspace with shared library
+projects/
+├── app-shell/
+└── shared-ui/
 ```
 
 **Structure Decision**: [Document the selected structure and reference the real

@@ -8,7 +8,8 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: The examples below include test tasks. Tests are EXPECTED whenever a
+story changes behavior, contracts, or regressions that can be automated.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -20,10 +21,10 @@ description: "Task list template for feature implementation"
 
 ## Path Conventions
 
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+- **Angular single app**: `src/app/` with colocated `*.spec.ts` files and optional `e2e/`
+- **Angular + API**: `frontend/src/app/` for Angular code and `backend/src/` for server code
+- **Angular workspace**: `projects/` for apps and shared libraries
+- Paths shown below assume an Angular single app - adjust based on plan.md structure
 
 <!-- 
   ============================================================================
@@ -49,8 +50,8 @@ description: "Task list template for feature implementation"
 **Purpose**: Project initialization and basic structure
 
 - [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
-- [ ] T003 [P] Configure linting and formatting tools
+- [ ] T002 Initialize Angular project or workspace dependencies
+- [ ] T003 [P] Configure linting, formatting, and strict TypeScript settings
 
 ---
 
@@ -62,11 +63,11 @@ description: "Task list template for feature implementation"
 
 Examples of foundational tasks (adjust based on your project):
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
+- [ ] T004 Create application shell, core providers, and route structure
+- [ ] T005 [P] Define shared typed contracts used across stories
+- [ ] T006 [P] Setup API access layer or adapters needed by multiple stories
+- [ ] T007 Create base UI states and error handling patterns
+- [ ] T008 Configure form validation and accessibility conventions
 - [ ] T009 Setup environment configuration management
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
@@ -79,21 +80,22 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 1 ⚠️
 
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+> **NOTE: Add the lowest-cost tests that prove the story and ensure regression
+> coverage for the changed behavior**
 
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T010 [P] [US1] Add component or unit test coverage in src/app/[feature]/[file].spec.ts
+- [ ] T011 [P] [US1] Add integration or e2e coverage for [user journey] when needed
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+- [ ] T012 [P] [US1] Create typed models or DTOs in src/app/[feature]/[types].ts
+- [ ] T013 [P] [US1] Create standalone component or route in src/app/[feature]/[feature].ts
+- [ ] T014 [US1] Implement supporting service or data adapter in src/app/[feature]/[service].ts
+- [ ] T015 [US1] Wire template, state transitions, and route integration
+- [ ] T016 [US1] Add validation, loading, and error states
+- [ ] T017 [US1] Document any justified complexity in plan.md if introduced
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -105,17 +107,17 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 2 ⚠️
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T018 [P] [US2] Add component or unit test coverage in src/app/[feature]/[file].spec.ts
+- [ ] T019 [P] [US2] Add integration or e2e coverage for [user journey] when needed
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+- [ ] T020 [P] [US2] Create typed contracts in src/app/[feature]/[types].ts
+- [ ] T021 [US2] Implement Angular service, guard, or helper in src/app/[feature]/[service].ts
+- [ ] T022 [US2] Implement route or component behavior in src/app/[feature]/[feature].ts
+- [ ] T023 [US2] Integrate with User Story 1 surfaces only through explicit contracts
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -127,16 +129,16 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 3 ⚠️
 
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T024 [P] [US3] Add component or unit test coverage in src/app/[feature]/[file].spec.ts
+- [ ] T025 [P] [US3] Add integration or e2e coverage for [user journey] when needed
 
 ### Implementation for User Story 3
 
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T026 [P] [US3] Create typed contracts in src/app/[feature]/[types].ts
+- [ ] T027 [US3] Implement Angular service, state helper, or adapter in src/app/[feature]/[service].ts
+- [ ] T028 [US3] Implement route or component behavior in src/app/[feature]/[feature].ts
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -150,10 +152,10 @@ Examples of foundational tasks (adjust based on your project):
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] TXXX [P] Documentation updates in docs/
+- [ ] TXXX [P] Documentation updates in docs/ or specs/
 - [ ] TXXX Code cleanup and refactoring
 - [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
+- [ ] TXXX [P] Additional component, unit, or e2e tests where coverage is still thin
 - [ ] TXXX Security hardening
 - [ ] TXXX Run quickstart.md validation
 
@@ -178,10 +180,10 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Within Each User Story
 
-- Tests (if included) MUST be written and FAIL before implementation
-- Models before services
-- Services before endpoints
-- Core implementation before integration
+- Tests MUST be added at the lowest-cost layer that proves the change
+- Typed contracts before services or components that consume them
+- Services and adapters before route wiring when external data is involved
+- Core implementation before broader integration coverage
 - Story complete before moving to next priority
 
 ### Parallel Opportunities
@@ -199,12 +201,12 @@ Examples of foundational tasks (adjust based on your project):
 
 ```bash
 # Launch all tests for User Story 1 together (if tests requested):
-Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
-Task: "Integration test for [user journey] in tests/integration/test_[name].py"
+Task: "Add component or unit test coverage in src/app/[feature]/[file].spec.ts"
+Task: "Add integration or e2e coverage for [user journey] when needed"
 
 # Launch all models for User Story 1 together:
-Task: "Create [Entity1] model in src/models/[entity1].py"
-Task: "Create [Entity2] model in src/models/[entity2].py"
+Task: "Create typed models or DTOs in src/app/[feature]/[types].ts"
+Task: "Create standalone component or route in src/app/[feature]/[feature].ts"
 ```
 
 ---
@@ -245,7 +247,7 @@ With multiple developers:
 - [P] tasks = different files, no dependencies
 - [Story] label maps task to specific user story for traceability
 - Each user story should be independently completable and testable
-- Verify tests fail before implementing
+- Verify the planned tests cover the changed behavior before implementing
 - Commit after each task or logical group
 - Stop at any checkpoint to validate story independently
 - Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence

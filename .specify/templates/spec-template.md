@@ -95,6 +95,17 @@
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
+### Implementation Guardrails *(mandatory for Angular-facing features)*
+
+- **IG-001**: The spec MUST identify the primary Angular surface affected by the
+  feature, such as route, standalone component, service, guard, or form flow.
+- **IG-002**: The spec MUST call out any typed contracts that the implementation
+  depends on, including API payloads, route data, or form models.
+- **IG-003**: The spec MUST state the intended validation layer for critical
+  behavior: unit, component, integration, or end-to-end.
+- **IG-004**: If the feature introduces shared state, wrappers, or cross-feature
+  abstractions, the spec MUST explain why a feature-local approach is insufficient.
+
 ### Key Entities *(include if feature involves data)*
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]
