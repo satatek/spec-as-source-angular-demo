@@ -1,0 +1,9 @@
+{
+  "environmentName": "development",
+  "keycloakUrl": "http://localhost:8080",
+  "realm": "local-demo",
+  "clientId": "angular-local-demo",
+  "silentCheckSsoPath": "/assets/silent-check-sso.html",
+  "postLoginRoute": "/home",
+  "postLogoutRoute": "/"
+}

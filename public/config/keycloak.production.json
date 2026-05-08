@@ -1,0 +1,9 @@
+{
+  "environmentName": "production",
+  "keycloakUrl": "https://sso.example.com",
+  "realm": "demo-prod",
+  "clientId": "angular-demo-web",
+  "silentCheckSsoPath": "/assets/silent-check-sso.html",
+  "postLoginRoute": "/home",
+  "postLogoutRoute": "/"
+}

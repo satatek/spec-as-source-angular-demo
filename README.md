@@ -186,9 +186,9 @@ Right now, the README defines the challenge clearly:
 - apply it to Angular
 - measure whether the workflow still holds under a stricter frontend architecture
 
-## Local Demo Flow
+## Runtime Config Demo Flow
 
-The first implemented feature in this repository is a local Angular 21 + Keycloak demo.
+The first implemented feature in this repository is an Angular 21 + Keycloak demo driven by runtime environment configuration.
 
 It provides:
 
@@ -198,22 +198,26 @@ It provides:
 - Keycloak profile details rendered in Angular Material cards and lists
 - a log off action on the authenticated detail page that returns users to the welcome page
 
-### Local Requirements
+### Runtime Configuration Requirements
 
 - Node.js 24+
 - npm 11+
-- a Keycloak server at `http://localhost:8080/`
-- realm `local-demo`
-- public client `angular-local-demo`
+- a deployment-owned `/config/keycloak.json` file served by the app
+- a Keycloak environment whose URL, realm, and client ID are defined in that runtime config file
+- valid redirect URIs and web origins configured for the current application origin
 
-### Run Locally
+Environment-specific example configs are provided in `public/config/keycloak.development.json`, `public/config/keycloak.staging.json`, and `public/config/keycloak.production.json`.
+
+Select one of those examples as `public/config/keycloak.json` and replace the example hostnames with real environment values before sign-in validation.
+
+### Run
 
 ```bash
 npm install
 npm start
 ```
 
-Open `http://localhost:4200/` and use the welcome page to trigger the Keycloak flow.
+Open the active app origin and use the welcome page to trigger the Keycloak flow.
 After login, the authenticated detail page at `/home` also exposes a `Log off` button that ends the session and returns to `/`.
 
 ### Validation
@@ -236,6 +240,12 @@ If you want the smoke suite to exercise a real Keycloak login, provide:
 - `KEYCLOAK_E2E_PASSWORD`
 
 The browser smoke test now also verifies the authenticated `Log off` action when those credentials are available.
+
+### Runtime Config Validation
+
+- The app loads `/config/keycloak.json` before Angular bootstraps.
+- Redirect URIs are derived from the active browser origin instead of a hardcoded localhost value.
+- If the runtime config file is missing or invalid, the app renders an application configuration error instead of silently falling back to the wrong environment.
 
 ### Version Note
 

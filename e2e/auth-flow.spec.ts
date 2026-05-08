@@ -6,6 +6,7 @@ test.describe('Keycloak authentication flow', () => {
 
     await expect(page.getByRole('heading', { name: /welcome to the local demo application/i })).toBeVisible();
     await expect(page.getByRole('button', { name: /sign in with keycloak/i })).toBeVisible();
+    await expect(page.getByText(/application configuration error/i)).toHaveCount(0);
 
     await page.goto('/home');
     await expect(page).toHaveURL(/\/$/);

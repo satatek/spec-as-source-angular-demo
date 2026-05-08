@@ -68,6 +68,18 @@ describe('AuthFacade', () => {
     expect(profile?.email).toBe('casey@example.com');
   });
 
+  it('starts provider login with a redirect on the active application origin', async () => {
+    const facade = TestBed.inject(AuthFacade);
+
+    await facade.login('/home');
+
+    expect(keycloakMock.login).toHaveBeenCalledWith({
+      redirectUri: `${window.location.origin}/home`,
+    });
+    expect(facade.session().status).toBe('checking');
+    expect(facade.session().redirectTarget).toBe('/home');
+  });
+
   it('starts provider logout and clears local profile state before redirecting to the welcome page', async () => {
     const facade = TestBed.inject(AuthFacade);
 
