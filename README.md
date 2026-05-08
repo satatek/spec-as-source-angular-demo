@@ -206,9 +206,32 @@ It provides:
 - a Keycloak environment whose URL, realm, and client ID are defined in that runtime config file
 - valid redirect URIs and web origins configured for the current application origin
 
-Environment-specific example configs are provided in `public/config/keycloak.development.json`, `public/config/keycloak.staging.json`, and `public/config/keycloak.production.json`.
+### Configuration Details
 
-Select one of those examples as `public/config/keycloak.json` and replace the example hostnames with real environment values before sign-in validation.
+The application reads the active environment from `/config/keycloak.json` before Angular bootstraps. The file must be a JSON object with these fields:
+
+| Field | Required | Example | Notes |
+|---|---|---|---|
+| `environmentName` | Yes | `development`, `staging`, `production` | Used to label the target environment |
+| `keycloakUrl` | Yes | `http://localhost:8080` or `https://sso.staging.example.com` | Absolute URL to the Keycloak server |
+| `realm` | Yes | `local-demo`, `demo-dev`, `demo-staging`, `demo-prod` | Keycloak realm name |
+| `clientId` | Yes | `angular-local-demo` or `angular-demo-web` | Public SPA client ID |
+| `silentCheckSsoPath` | Yes | `/assets/silent-check-sso.html` | App-relative path used to build the silent SSO redirect |
+| `postLoginRoute` | Yes | `/home` | Route used after sign-in |
+| `postLogoutRoute` | Yes | `/` | Route used after sign-out |
+
+The app derives the final redirect URIs from the active browser origin, so you do not need to hardcode full callback URLs in the JSON file. The following values are provided as ready-to-use environment examples:
+
+- [public/config/keycloak.json](public/config/keycloak.json): active development-local configuration used by default in the repo
+- [public/config/keycloak.development.json](public/config/keycloak.development.json): development example for a remote SSO host
+- [public/config/keycloak.staging.json](public/config/keycloak.staging.json): staging example
+- [public/config/keycloak.production.json](public/config/keycloak.production.json): production example
+
+To switch environments, copy the desired example to `public/config/keycloak.json` in the deployed app or publish that file directly at `/config/keycloak.json` for the target environment. Then replace the example hostnames and realm values with the real Keycloak values for that environment.
+
+Each Keycloak client must also be configured with the current application origin in its Redirect URIs and Web Origins settings. For example, if the app is hosted at `https://app.staging.example.com`, the client should allow `https://app.staging.example.com/*` and the matching origin.
+
+The runtime config is validated at startup. If the file is missing, malformed, or points to invalid values, the app shows an application configuration error instead of bootstrapping with the wrong environment.
 
 ### Run
 
