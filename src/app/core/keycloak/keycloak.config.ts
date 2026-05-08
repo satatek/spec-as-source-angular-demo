@@ -1,22 +1,26 @@
 import { EnvironmentProviders } from '@angular/core';
 import { provideKeycloak } from 'keycloak-angular';
 
-const silentCheckSsoRedirectUri = typeof window === 'undefined'
-  ? 'http://localhost:4200/assets/silent-check-sso.html'
-  : `${window.location.origin}/assets/silent-check-sso.html`;
+import { KeycloakRuntimeSettings } from '../config/runtime-config.models';
 
-export function provideAppKeycloak(): EnvironmentProviders {
-  return provideKeycloak({
+type KeycloakProviderOptions = Parameters<typeof provideKeycloak>[0];
+
+export function buildKeycloakProviderOptions(runtimeSettings: KeycloakRuntimeSettings): KeycloakProviderOptions {
+  return {
     config: {
-      url: 'http://localhost:8080/',
-      realm: 'local-demo',
-      clientId: 'angular-local-demo',
+      url: runtimeSettings.keycloakUrl,
+      realm: runtimeSettings.realm,
+      clientId: runtimeSettings.clientId,
     },
     initOptions: {
       onLoad: 'check-sso',
       pkceMethod: 'S256',
       checkLoginIframe: true,
-      silentCheckSsoRedirectUri,
+      silentCheckSsoRedirectUri: runtimeSettings.silentCheckSsoRedirectUri,
     },
-  });
+  };
+}
+
+export function provideAppKeycloak(runtimeSettings: KeycloakRuntimeSettings): EnvironmentProviders {
+  return provideKeycloak(buildKeycloakProviderOptions(runtimeSettings));
 }
