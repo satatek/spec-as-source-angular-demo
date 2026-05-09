@@ -12,12 +12,85 @@
       "children": null
     },
     {
-      "id": "gatway_payments",
-      "label": "Gateway Payments",
+      "id": "ocpi_modules",
+      "label": "OCPI Modules",
       "route": null,
       "requiresAuth": true,
       "visibleWhenAuthenticated": true,
       "order": 20,
+      "children": [
+        {
+          "id": "versions",
+          "label": "Versions",
+          "route": "/getnet",
+          "icon": "merge",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 10
+        },
+        {
+          "id": "locations",
+          "label": "Locations",
+          "route": "/getnet",
+          "icon": "location_on",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 20
+        },
+        {
+          "id": "sessions",
+          "label": "Sessions",
+          "route": "/getnet",
+          "icon": "electric_car",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 30
+        },
+        {
+          "id": "cdrs",
+          "label": "CDRs",
+          "route": "/getnet",
+          "icon": "payments",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 40
+        },
+        {
+          "id": "tokens",
+          "label": "Tokens",
+          "route": "/getnet",
+          "icon": "token",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 50
+        },
+        {
+          "id": "commands",
+          "label": "Commands",
+          "route": "/getnet",
+          "icon": "terminal_2",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 60
+        },
+        {
+          "id": "charge_profiles",
+          "label": "Charge Profiles",
+          "route": "/getnet",
+          "icon": "electric_meter",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 70
+        }
+      ]
+    },
+    {
+      "id": "emsp_gatway_payments",
+      "label": "eMSP Gateway Payments",
+      "route": null,
+      "requiresAuth": true,
+      "visibleWhenAuthenticated": true,
+      "order": 30,
       "children": [
         {
           "id": "getnet",
