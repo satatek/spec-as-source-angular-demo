@@ -46,13 +46,6 @@ export const APP_LAYOUT_SECTIONS: readonly LayoutSection[] = [
 
 export const SHELL_NAV_ITEMS: readonly ShellNavigationItem[] = [
   {
-    label: 'Welcome',
-    route: '/',
-    icon: 'home',
-    requiresAuth: false,
-    visibleWhenAuthenticated: null,
-  },
-  {
     label: 'Home',
     route: '/home',
     icon: 'dashboard',

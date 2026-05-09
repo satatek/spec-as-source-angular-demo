@@ -1,0 +1,35 @@
+.account-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.account-card,
+.profile-card {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  color: #6b7c93;
+}
+
+.supporting-copy {
+  margin: 0;
+  color: #4d617d;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.loading-state,
+.warning-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}

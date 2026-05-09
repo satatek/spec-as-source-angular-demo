@@ -1,0 +1,33 @@
+<section class="account-page">
+  <mat-card class="account-card" appearance="outlined">
+    <p class="eyebrow">Account profile</p>
+    <h1>Your logged-in profile</h1>
+    <p class="supporting-copy">
+      This page keeps login, logoff, and identity details together in one simple place.
+    </p>
+
+    @if (isProfileLoading()) {
+      <div class="loading-state" role="status" aria-live="polite">
+        <mat-spinner diameter="32" />
+        <span>Loading your profile information…</span>
+      </div>
+    }
+
+    @if (viewState().feedbackMessage; as feedbackMessage) {
+      <div class="warning-state" role="status" aria-live="polite">{{ feedbackMessage }}</div>
+    }
+
+  </mat-card>
+
+  <mat-card class="profile-card" appearance="outlined">
+    <h2>Profile details</h2>
+    <mat-list>
+      @for (field of viewState().profileFields; track field.label) {
+        <mat-list-item>
+          <div matListItemTitle>{{ field.label }}</div>
+          <div matListItemLine>{{ field.value }}</div>
+        </mat-list-item>
+      }
+    </mat-list>
+  </mat-card>
+</section>

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AccountPageComponent } from './features/account/account-page.component';
 import { HomePageComponent } from './features/home/home-page.component';
 import { WelcomePageComponent } from './features/welcome/welcome-page.component';
 import { canActivateAuthenticatedRoute } from './core/auth/auth.guard';
@@ -17,6 +18,11 @@ export const routes: Routes = [
 			{
 				path: 'home',
 				component: HomePageComponent,
+				canActivate: [canActivateAuthenticatedRoute],
+			},
+			{
+				path: 'account',
+				component: AccountPageComponent,
 				canActivate: [canActivateAuthenticatedRoute],
 			},
 		],

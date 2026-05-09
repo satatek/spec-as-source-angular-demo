@@ -29,8 +29,4 @@ export class WelcomePageComponent {
       }
     });
   }
-
-  async signIn(): Promise<void> {
-    await this.facade.login(this.redirectTarget);
-  }
 }

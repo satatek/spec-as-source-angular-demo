@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -11,6 +12,7 @@ import { filter } from 'rxjs';
 
 import { AuthFacade } from '../core/auth/auth.facade';
 import { APP_LAYOUT_SECTIONS, SHELL_NAV_ITEMS, ShellLayoutState, ShellNavigationItem } from './shell-navigation.models';
+import { buildHeaderProfileState, getVisibleProfileActions, HeaderProfileState, ProfileActionItem } from './shell-profile.models';
 
 @Component({
   selector: 'app-shell',
@@ -18,6 +20,7 @@ import { APP_LAYOUT_SECTIONS, SHELL_NAV_ITEMS, ShellLayoutState, ShellNavigation
     MatButtonModule,
     MatIconModule,
     MatListModule,
+    MatMenuModule,
     MatSidenavModule,
     MatToolbarModule,
     RouterLink,
@@ -36,6 +39,9 @@ export class AppShellComponent {
   readonly layoutSections = APP_LAYOUT_SECTIONS;
   readonly isMobile = signal(false);
   readonly sidenavOpened = signal(true);
+  readonly headerProfileState = computed<HeaderProfileState>(() =>
+    buildHeaderProfileState(this.authFacade.session(), this.authFacade.profile())
+  );
   readonly sidenavMode = computed<ShellLayoutState['mode']>(() => (this.isMobile() ? 'over' : 'side'));
   readonly layoutState = computed<ShellLayoutState>(() => ({
     mode: this.sidenavMode(),
@@ -44,6 +50,9 @@ export class AppShellComponent {
   }));
   readonly navigationItems = computed(() =>
     SHELL_NAV_ITEMS.filter((item) => this.isNavigationItemVisible(item))
+  );
+  readonly visibleProfileActions = computed(() =>
+    getVisibleProfileActions(this.headerProfileState())
   );
 
   constructor() {
@@ -71,6 +80,18 @@ export class AppShellComponent {
     this.sidenavOpened.update((opened) => !opened);
   }
 
+  openProfileAccount(): void {
+    void this.router.navigateByUrl('/account');
+  }
+
+  async logOff(): Promise<void> {
+    await this.authFacade.logout('/');
+  }
+
+  async signIn(): Promise<void> {
+    await this.authFacade.login('/home');
+  }
+
   closeSidenavOnNavigate(): void {
     if (this.isMobile()) {
       this.sidenavOpened.set(false);
@@ -79,6 +100,10 @@ export class AppShellComponent {
 
   trackByLabel(_index: number, item: ShellNavigationItem): string {
     return item.label;
+  }
+
+  trackByProfileAction(_index: number, item: ProfileActionItem): string {
+    return item.id;
   }
 
   private isNavigationItemVisible(item: ShellNavigationItem): boolean {
