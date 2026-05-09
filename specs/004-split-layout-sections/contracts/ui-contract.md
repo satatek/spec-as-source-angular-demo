@@ -37,6 +37,7 @@
 - Desktop behavior: sidenav mode `side`, visible by default.
 - Mobile behavior: sidenav mode `over`, hidden by default, toggleable from header.
 - In mobile mode, selecting a navigation entry closes the sidenav after route navigation.
+- Navigation source of truth is a typed shell navigation model with shared items for `Welcome` and authenticated-only `Home`.
 
 ## Accessibility Contract
 
@@ -50,3 +51,4 @@
 - Integration tests MUST verify route child projection into content region.
 - Responsive tests MUST verify sidenav mode and open/close behavior across breakpoints.
 - Guard regression tests MUST verify `/home` access control remains intact.
+- Content-page tests MUST verify feature templates remain content-only and do not duplicate `header`, `nav`, or `footer` shell landmarks.

@@ -1,0 +1,51 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.layout-shell {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.layout-shell__header {
+  border-bottom: 1px solid #d9e1ec;
+  background: #ffffff;
+}
+
+.layout-shell__brand {
+  margin-left: 0.25rem;
+  font-weight: 600;
+}
+
+.layout-shell__container {
+  min-height: 0;
+  background: transparent;
+}
+
+.layout-shell__sidenav {
+  width: 16rem;
+  border-right: 1px solid #d9e1ec;
+}
+
+.layout-shell__content {
+  padding: 1.25rem;
+}
+
+.layout-shell__footer {
+  border-top: 1px solid #d9e1ec;
+  background: #ffffff;
+  padding: 0.75rem 1rem;
+  color: #4d617d;
+}
+
+.active-link {
+  font-weight: 600;
+}
+
+@media (max-width: 959px) {
+  .layout-shell__content {
+    padding: 1rem;
+  }
+}

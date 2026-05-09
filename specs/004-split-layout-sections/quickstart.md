@@ -35,3 +35,8 @@
    - Mobile drawer opens/closes correctly
    - Guarded route behavior is unchanged
 3. Run `npm run build` to ensure no compilation regressions.
+
+## Validation Status (2026-05-08)
+
+- `npm test -- --watch=false`: PASS (39 tests, 10 files)
+- `npm run build`: PASS with warning (initial bundle budget exceeded by 43.57 kB)
