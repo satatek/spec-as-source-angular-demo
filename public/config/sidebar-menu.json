@@ -1,0 +1,62 @@
+{
+  "version": "1",
+  "items": [
+    {
+      "id": "home",
+      "label": "Home",
+      "route": "/home",
+      "icon": "dashboard",
+      "requiresAuth": true,
+      "visibleWhenAuthenticated": true,
+      "order": 10,
+      "children": null
+    },
+    {
+      "id": "gatway_payments",
+      "label": "Gateway Payments",
+      "route": null,
+      "requiresAuth": true,
+      "visibleWhenAuthenticated": true,
+      "order": 20,
+      "children": [
+        {
+          "id": "getnet",
+          "label": "GetNet",
+          "route": "/getnet",
+          "icon": "attach_money",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 10
+        },
+        {
+          "id": "santander",
+          "label": "Santander",
+          "route": "/santender",
+          "icon": "credit_card",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 20
+        },
+        {
+          "id": "assas",
+          "label": "Assas",
+          "route": "/assas",
+          "icon": "account_balance",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 30
+        }
+      ]
+    },
+    {
+      "id": "welcome",
+      "label": "Welcome",
+      "route": "/welcome",     
+      "icon": "handshake",
+      "requiresAuth": false,
+      "visibleWhenAuthenticated": false,
+      "order": 20,
+      "children": null
+    }
+  ]
+}

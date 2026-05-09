@@ -11,8 +11,12 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } fro
 import { filter } from 'rxjs';
 
 import { AuthFacade } from '../core/auth/auth.facade';
-import { APP_LAYOUT_SECTIONS, SHELL_NAV_ITEMS, ShellLayoutState, ShellNavigationItem } from './shell-navigation.models';
-import { buildHeaderProfileState, getVisibleProfileActions, HeaderProfileState, ProfileActionItem } from './shell-profile.models';
+import { ShellMenuConfigLoader } from './shell-menu-config.loader';
+import { SidebarMenuChildItem, SidebarMenuItem } from './shell-menu.models';
+import { APP_LAYOUT_SECTIONS, filterMenuItemsForAuth, ShellLayoutState } from './shell-navigation.models';
+import { buildHeaderProfileState, HeaderProfileState } from './shell-profile.models';
+
+type MenuLoadStatus = 'loading' | 'ready' | 'error';
 
 @Component({
   selector: 'app-shell',
@@ -34,11 +38,16 @@ export class AppShellComponent {
   private readonly authFacade = inject(AuthFacade);
   private readonly breakpointObserver = inject(BreakpointObserver);
   private readonly router = inject(Router);
+  private readonly menuConfigLoader = inject(ShellMenuConfigLoader);
   private readonly destroyRef = inject(DestroyRef);
 
   readonly layoutSections = APP_LAYOUT_SECTIONS;
   readonly isMobile = signal(false);
   readonly sidenavOpened = signal(true);
+  readonly rawMenuItems = signal<SidebarMenuItem[]>([]);
+  readonly expandedParentIds = signal<string[]>([]);
+  readonly menuStatus = signal<MenuLoadStatus>('loading');
+  readonly menuErrorMessage = signal<string | null>(null);
   readonly headerProfileState = computed<HeaderProfileState>(() =>
     buildHeaderProfileState(this.authFacade.session(), this.authFacade.profile())
   );
@@ -49,13 +58,12 @@ export class AppShellComponent {
     isMobile: this.isMobile(),
   }));
   readonly navigationItems = computed(() =>
-    SHELL_NAV_ITEMS.filter((item) => this.isNavigationItemVisible(item))
-  );
-  readonly visibleProfileActions = computed(() =>
-    getVisibleProfileActions(this.headerProfileState())
+    filterMenuItemsForAuth(this.rawMenuItems(), this.authFacade.isAuthenticated())
   );
 
   constructor() {
+    this.loadNavigationMenu();
+
     this.breakpointObserver
       .observe('(max-width: 959px)')
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -98,19 +106,47 @@ export class AppShellComponent {
     }
   }
 
-  trackByLabel(_index: number, item: ShellNavigationItem): string {
-    return item.label;
+  toggleParent(itemId: string): void {
+    this.expandedParentIds.update((ids) => {
+      if (ids.includes(itemId)) {
+        return ids.filter((id) => id !== itemId);
+      }
+
+      return [...ids, itemId];
+    });
   }
 
-  trackByProfileAction(_index: number, item: ProfileActionItem): string {
+  isParentExpanded(itemId: string): boolean {
+    return this.expandedParentIds().includes(itemId);
+  }
+
+  trackByMenuItemId(_index: number, item: SidebarMenuItem): string {
     return item.id;
   }
 
-  private isNavigationItemVisible(item: ShellNavigationItem): boolean {
-    if (item.visibleWhenAuthenticated === null) {
-      return true;
-    }
+  trackByChildMenuItemId(_index: number, item: SidebarMenuChildItem): string {
+    return item.id;
+  }
 
-    return this.authFacade.isAuthenticated() === item.visibleWhenAuthenticated;
+  private loadNavigationMenu(): void {
+    this.menuStatus.set('loading');
+    this.menuErrorMessage.set(null);
+
+    this.menuConfigLoader
+      .loadMenu()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        this.rawMenuItems.set(result.items);
+        this.menuStatus.set(result.status);
+        this.menuErrorMessage.set(result.errorMessage);
+
+        const visibleParentIds = result.items
+          .filter((item) => item.children !== null && item.children.length > 0)
+          .map((item) => item.id);
+
+        this.expandedParentIds.update((ids) =>
+          ids.filter((id) => visibleParentIds.includes(id))
+        );
+      });
   }
 }
