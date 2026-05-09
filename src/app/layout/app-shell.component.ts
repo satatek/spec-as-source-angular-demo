@@ -144,9 +144,7 @@ export class AppShellComponent {
           .filter((item) => item.children !== null && item.children.length > 0)
           .map((item) => item.id);
 
-        this.expandedParentIds.update((ids) =>
-          ids.filter((id) => visibleParentIds.includes(id))
-        );
+        this.expandedParentIds.set(visibleParentIds);
       });
   }
 }
