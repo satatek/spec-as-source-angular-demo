@@ -30,6 +30,26 @@
           "order": 10
         }
       ]
+    },
+    {
+      "id": "test",
+      "label": "Test",
+      "route": null,
+      "icon": "manage_accounts",
+      "requiresAuth": false,
+      "visibleWhenAuthenticated": false,
+      "order": 20,
+      "children": [
+        {
+          "id": "test2",
+          "label": "Test2",
+          "route": "/",
+          "icon": "account_circle",
+          "requiresAuth": false,
+          "visibleWhenAuthenticated": false,
+          "order": 10
+        }
+      ]
     }
   ]
 }

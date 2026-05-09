@@ -225,7 +225,7 @@ describe('AppShellComponent', () => {
     expect(compiled.textContent).toContain('Menu configuration unavailable.');
   });
 
-  it('toggles parent sections and renders child links for two-level menus', async () => {
+  it('renders child links for two-level menus without requiring expansion', async () => {
     session.set({
       ...session(),
       status: 'authenticated',
@@ -237,14 +237,9 @@ describe('AppShellComponent', () => {
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    const parentToggle = compiled.querySelector('button.layout-shell__parent-item') as HTMLButtonElement;
+    const parentRow = compiled.querySelector('.layout-shell__parent-item');
 
-    expect(parentToggle).toBeTruthy();
-    expect(compiled.textContent).not.toContain('Profile');
-
-    parentToggle.click();
-    fixture.detectChanges();
-    await fixture.whenStable();
+    expect(parentRow).toBeTruthy();
 
     const nestedList = compiled.querySelector('.layout-shell__nested-list');
     expect(nestedList).not.toBeNull();

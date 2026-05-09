@@ -92,9 +92,12 @@
                   <mat-icon matListItemIcon>{{ icon }}</mat-icon>
                 }
                 <span matListItemTitle>{{ item.label }}</span>
-                <mat-icon class="layout-shell__expand-icon">
-                  {{ isParentExpanded(item.id) ? 'expand_less' : 'expand_more' }}
-                </mat-icon>
+                <mat-icon
+                  matListItemMeta
+                  class="layout-shell__expand-icon"
+                  [fontIcon]="isParentExpanded(item.id) ? 'expand_less' : 'expand_more'"
+                  aria-hidden="true"
+                ></mat-icon>
               </button>
 
               @if (isParentExpanded(item.id)) {
