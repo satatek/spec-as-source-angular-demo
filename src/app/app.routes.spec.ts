@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { routes } from './app.routes';
+import { AccountPageComponent } from './features/account/account-page.component';
 import { HomePageComponent } from './features/home/home-page.component';
 import { WelcomePageComponent } from './features/welcome/welcome-page.component';
 import { AppShellComponent } from './layout/app-shell.component';
@@ -31,5 +32,13 @@ describe('app routes', () => {
       component: HomePageComponent,
     });
     expect(routes[0]?.children?.[1]?.canActivate?.length).toBe(1);
+  });
+
+  it('protects the shell account child route and maps it to the account page component', () => {
+    expect(routes[0]?.children?.[2]).toMatchObject({
+      path: 'account',
+      component: AccountPageComponent,
+    });
+    expect(routes[0]?.children?.[2]?.canActivate?.length).toBe(1);
   });
 });

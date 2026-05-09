@@ -15,8 +15,26 @@
 }
 
 .layout-shell__brand {
-  margin-left: 0.25rem;
   font-weight: 600;
+}
+
+.layout-shell__spacer {
+  flex: 1 1 auto;
+}
+
+.layout-shell__profile-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+  margin-left: 0.75rem;
+}
+
+.layout-shell__profile-label {
+  max-width: 14rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .layout-shell__container {
@@ -34,6 +52,10 @@
   padding: 1.25rem;
 }
 
+.layout-shell__mobile-topbar {
+  display: none;
+}
+
 .layout-shell__footer {
   border-top: 1px solid #d9e1ec;
   background: #ffffff;
@@ -46,6 +68,21 @@
 }
 
 @media (max-width: 959px) {
+  .layout-shell__mobile-topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem 0;
+  }
+
+  .layout-shell__mobile-title {
+    font-weight: 600;
+  }
+
+  .layout-shell__profile-label {
+    max-width: 8rem;
+  }
+
   .layout-shell__content {
     padding: 1rem;
   }

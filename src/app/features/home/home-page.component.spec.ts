@@ -64,6 +64,7 @@ describe('HomePageComponent', () => {
     expect(compiled.textContent).toContain('Welcome, Casey Rivers.');
     expect(compiled.textContent).toContain('casey@example.com');
     expect(compiled.textContent).toContain('Log off');
+    expect(compiled.textContent).toContain('funny and happy things happening in the demo');
   });
 
   it('keeps page markup content-only without duplicated shell landmarks', () => {

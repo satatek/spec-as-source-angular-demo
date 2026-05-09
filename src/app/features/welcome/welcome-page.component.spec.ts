@@ -65,7 +65,7 @@ describe('WelcomePageComponent', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Sign in with Keycloak');
-    expect(compiled.textContent).toContain('Start authentication');
+    expect(compiled.textContent).toContain('friendly demo page');
   });
 
   it('starts the login flow when the primary action is clicked', async () => {

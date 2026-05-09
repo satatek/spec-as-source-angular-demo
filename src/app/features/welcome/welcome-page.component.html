@@ -1,10 +1,10 @@
 <section class="welcome-page">
   <mat-card class="hero-card" appearance="outlined">
     <p class="eyebrow">Angular 21 + Keycloak</p>
-    <h1>Welcome to the local demo application</h1>
+    <h1>Welcome to the Demo Page</h1>
     <p class="supporting-copy">
-      Start authentication from this public page, then return to a protected home experience with
-      your Keycloak profile rendered inside the Angular application.
+      This is the friendly demo page. Start authentication here and then explore the happy little
+      things waiting on the home page.
     </p>
 
     @if (facade.errorMessage(); as errorMessage) {
@@ -30,8 +30,8 @@
     <h2>What happens next</h2>
     <ol>
       <li>The app checks whether a Keycloak session already exists.</li>
-      <li>If you choose to continue, the login flow redirects to the local Keycloak realm.</li>
-      <li>After authentication, the app returns to the protected home page and loads your profile.</li>
+      <li>If you choose to continue, the login flow redirects to the protected experience.</li>
+      <li>After authentication, the home page welcomes you with funny and happy demo content.</li>
     </ol>
   </mat-card>
 </section>
