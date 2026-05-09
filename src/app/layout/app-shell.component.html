@@ -88,16 +88,14 @@
                 [attr.aria-expanded]="isParentExpanded(item.id)"
                 (click)="toggleParent(item.id)"
               >
-                @if (item.icon; as icon) {
+                @if (item.icon; as icon) {                  
                   <mat-icon matListItemIcon>{{ icon }}</mat-icon>
                 }
-                <span matListItemTitle>{{ item.label }}</span>
-                <mat-icon
-                  matListItemMeta
-                  class="layout-shell__expand-icon"
-                  [fontIcon]="isParentExpanded(item.id) ? 'expand_less' : 'expand_more'"
-                  aria-hidden="true"
-                ></mat-icon>
+                  <mat-icon matListItemIcon  
+                      [fontIcon]="isParentExpanded(item.id) ? 'expand_less' : 'expand_more'"
+                      aria-hidden="true"
+                    ></mat-icon>
+                <span matListItemTitle>{{ item.label }}</span>            
               </button>
 
               @if (isParentExpanded(item.id)) {

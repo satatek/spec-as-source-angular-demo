@@ -12,44 +12,51 @@
       "children": null
     },
     {
-      "id": "account",
-      "label": "Account",
+      "id": "gatway_payments",
+      "label": "Gateway Payments",
       "route": null,
-      "icon": "manage_accounts",
       "requiresAuth": true,
       "visibleWhenAuthenticated": true,
       "order": 20,
       "children": [
         {
-          "id": "profile",
-          "label": "Profile",
-          "route": "/account",
-          "icon": "account_circle",
+          "id": "getnet",
+          "label": "GetNet",
+          "route": "/getnet",
+          "icon": "attach_money",
           "requiresAuth": true,
           "visibleWhenAuthenticated": true,
           "order": 10
+        },
+        {
+          "id": "santander",
+          "label": "Santander",
+          "route": "/santender",
+          "icon": "credit_card",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 20
+        },
+        {
+          "id": "assas",
+          "label": "Assas",
+          "route": "/assas",
+          "icon": "account_balance",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 30
         }
       ]
     },
     {
-      "id": "test",
-      "label": "Test",
-      "route": null,
-      "icon": "manage_accounts",
+      "id": "welcome",
+      "label": "Welcome",
+      "route": "/welcome",     
+      "icon": "handshake",
       "requiresAuth": false,
       "visibleWhenAuthenticated": false,
       "order": 20,
-      "children": [
-        {
-          "id": "test2",
-          "label": "Test2",
-          "route": "/",
-          "icon": "account_circle",
-          "requiresAuth": false,
-          "visibleWhenAuthenticated": false,
-          "order": 10
-        }
-      ]
+      "children": null
     }
   ]
 }
