@@ -1,0 +1,35 @@
+{
+  "version": "1",
+  "items": [
+    {
+      "id": "home",
+      "label": "Home",
+      "route": "/home",
+      "icon": "dashboard",
+      "requiresAuth": true,
+      "visibleWhenAuthenticated": true,
+      "order": 10,
+      "children": null
+    },
+    {
+      "id": "account",
+      "label": "Account",
+      "route": null,
+      "icon": "manage_accounts",
+      "requiresAuth": true,
+      "visibleWhenAuthenticated": true,
+      "order": 20,
+      "children": [
+        {
+          "id": "profile",
+          "label": "Profile",
+          "route": "/account",
+          "icon": "account_circle",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 10
+        }
+      ]
+    }
+  ]
+}

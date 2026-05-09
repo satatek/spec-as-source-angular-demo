@@ -1,6 +1,16 @@
 <div class="layout-shell">
   <header class="layout-shell__header">
     <mat-toolbar>
+      <button
+        mat-icon-button
+        type="button"
+        class="layout-shell__menu-toggle"
+        (click)="toggleSidenav()"
+        aria-label="Toggle sidebar navigation"
+      >
+        <mat-icon>{{ sidenavOpened() ? 'menu_open' : 'menu' }}</mat-icon>
+      </button>
+
       <span class="layout-shell__brand">Satatek Demo</span>
 
       <span class="layout-shell__spacer"></span>
@@ -60,34 +70,65 @@
       [disableClose]="!isMobile()"
     >
       <nav aria-label="Primary navigation">
+        @if (menuStatus() === 'loading') {
+          <p class="layout-shell__menu-state" role="status">Loading navigation menu...</p>
+        }
+
+        @if (menuStatus() === 'error') {
+          <p class="layout-shell__menu-state" role="status">{{ menuErrorMessage() }}</p>
+        }
+
         <mat-nav-list>
-          @for (item of navigationItems(); track trackByLabel($index, item)) {
-            <a mat-list-item [routerLink]="item.route" routerLinkActive="active-link" (click)="closeSidenavOnNavigate()">
-              @if (item.icon; as icon) {
-                <mat-icon matListItemIcon>{{ icon }}</mat-icon>
+          @for (item of navigationItems(); track trackByMenuItemId($index, item)) {
+            @if (item.children !== null && item.children.length > 0) {
+              <button
+                mat-list-item
+                type="button"
+                class="layout-shell__parent-item"
+                [attr.aria-expanded]="isParentExpanded(item.id)"
+                (click)="toggleParent(item.id)"
+              >
+                @if (item.icon; as icon) {
+                  <mat-icon matListItemIcon>{{ icon }}</mat-icon>
+                }
+                <span matListItemTitle>{{ item.label }}</span>
+                <mat-icon class="layout-shell__expand-icon">
+                  {{ isParentExpanded(item.id) ? 'expand_less' : 'expand_more' }}
+                </mat-icon>
+              </button>
+
+              @if (isParentExpanded(item.id)) {
+                <div class="layout-shell__nested-list">
+                  @for (child of item.children; track trackByChildMenuItemId($index, child)) {
+                    <a
+                      mat-list-item
+                      class="layout-shell__nested-item"
+                      [routerLink]="child.route"
+                      routerLinkActive="active-link"
+                      (click)="closeSidenavOnNavigate()"
+                    >
+                      @if (child.icon; as icon) {
+                        <mat-icon matListItemIcon>{{ icon }}</mat-icon>
+                      }
+                      <span matListItemTitle>{{ child.label }}</span>
+                    </a>
+                  }
+                </div>
               }
-              <span matListItemTitle>{{ item.label }}</span>
-            </a>
+            } @else {
+              <a mat-list-item [routerLink]="item.route" routerLinkActive="active-link" (click)="closeSidenavOnNavigate()">
+                @if (item.icon; as icon) {
+                  <mat-icon matListItemIcon>{{ icon }}</mat-icon>
+                }
+                <span matListItemTitle>{{ item.label }}</span>
+              </a>
+            }
           }
         </mat-nav-list>
       </nav>
     </mat-sidenav>
 
     <mat-sidenav-content>
-      @if (isMobile()) {
-        <div class="layout-shell__mobile-topbar">
-          <button
-            mat-icon-button
-            type="button"
-            (click)="toggleSidenav()"
-            aria-label="Toggle navigation menu"
-          >
-            <mat-icon>menu</mat-icon>
-          </button>
-          <span class="layout-shell__mobile-title">Satatek Demo</span>
-        </div>
-      }
-
       <main class="layout-shell__content">
         <router-outlet />
       </main>

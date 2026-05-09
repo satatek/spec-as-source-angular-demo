@@ -14,6 +14,10 @@
   background: #ffffff;
 }
 
+.layout-shell__menu-toggle {
+  margin-right: 0.5rem;
+}
+
 .layout-shell__brand {
   font-weight: 600;
 }
@@ -48,12 +52,30 @@
   background: #f7f9fd;
 }
 
-.layout-shell__content {
-  padding: 1.25rem;
+.layout-shell__menu-state {
+  padding: 0.75rem 1rem;
+  color: #4d617d;
+  font-size: 0.875rem;
 }
 
-.layout-shell__mobile-topbar {
-  display: none;
+.layout-shell__parent-item {
+  font-weight: 500;
+}
+
+.layout-shell__expand-icon {
+  margin-left: auto;
+}
+
+.layout-shell__nested-list {
+  padding-left: 1rem;
+}
+
+.layout-shell__nested-item {
+  --mdc-list-list-item-leading-space: 2rem;
+}
+
+.layout-shell__content {
+  padding: 1.25rem;
 }
 
 .layout-shell__footer {
@@ -68,17 +90,6 @@
 }
 
 @media (max-width: 959px) {
-  .layout-shell__mobile-topbar {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem 0;
-  }
-
-  .layout-shell__mobile-title {
-    font-weight: 600;
-  }
-
   .layout-shell__profile-label {
     max-width: 8rem;
   }
