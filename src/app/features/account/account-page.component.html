@@ -17,11 +17,6 @@
       <div class="warning-state" role="status" aria-live="polite">{{ feedbackMessage }}</div>
     }
 
-    <div class="actions">
-      <button mat-flat-button type="button" (click)="signOut()" [disabled]="!viewState().canLogoff">
-        Log off
-      </button>
-    </div>
   </mat-card>
 
   <mat-card class="profile-card" appearance="outlined">

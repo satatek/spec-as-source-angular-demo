@@ -8,7 +8,6 @@ import { AccountPageComponent } from './account-page.component';
 
 describe('AccountPageComponent', () => {
   const ensureProfileLoaded = vi.fn(async () => null);
-  const logout = vi.fn(async (_redirectTarget?: string) => undefined);
   const session = signal({
     status: 'authenticated',
     isAuthenticated: true,
@@ -21,7 +20,6 @@ describe('AccountPageComponent', () => {
 
   beforeEach(async () => {
     ensureProfileLoaded.mockClear();
-    logout.mockClear();
     profile.set({
       subject: 'user-123',
       displayName: 'Casey Rivers',
@@ -43,7 +41,6 @@ describe('AccountPageComponent', () => {
             profile,
             isProfileLoading,
             ensureProfileLoaded,
-            logout,
           },
         },
       ],
@@ -59,17 +56,6 @@ describe('AccountPageComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Your logged-in profile');
     expect(compiled.textContent).toContain('casey@example.com');
-    expect(compiled.textContent).toContain('Log off');
-  });
-
-  it('starts logout from the account page', async () => {
-    const fixture = TestBed.createComponent(AccountPageComponent);
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('button[mat-flat-button]') as HTMLButtonElement;
-    button.click();
-    await fixture.whenStable();
-
-    expect(logout).toHaveBeenCalledWith('/');
+    expect(compiled.textContent).not.toContain('Log off');
   });
 });

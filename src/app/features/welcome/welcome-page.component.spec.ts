@@ -15,11 +15,9 @@ describe('WelcomePageComponent', () => {
     redirectTarget: null as string | null,
   });
   const isAuthenticated = signal(false);
-  const login = vi.fn(async (_redirectTarget?: string) => undefined);
   const dismissError = vi.fn();
 
   beforeEach(async () => {
-    login.mockClear();
     dismissError.mockClear();
     session.set({
       status: 'anonymous',
@@ -41,7 +39,6 @@ describe('WelcomePageComponent', () => {
             isAuthenticated,
             isChecking: () => session().status === 'checking',
             errorMessage: () => session().lastErrorMessage,
-            login,
             dismissError,
           },
         },
@@ -59,25 +56,13 @@ describe('WelcomePageComponent', () => {
     }).compileComponents();
   });
 
-  it('renders the Keycloak login action for anonymous users', () => {
+  it('renders the welcome content without page-level sign-in action', () => {
     const fixture = TestBed.createComponent(WelcomePageComponent);
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('Sign in with Keycloak');
     expect(compiled.textContent).toContain('friendly demo page');
-  });
-
-  it('starts the login flow when the primary action is clicked', async () => {
-    const fixture = TestBed.createComponent(WelcomePageComponent);
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('button[mat-flat-button]') as HTMLButtonElement;
-    button.click();
-    await fixture.whenStable();
-
-    expect(login).toHaveBeenCalledTimes(1);
-    expect(login).toHaveBeenCalledWith('/home');
+    expect(compiled.textContent).not.toContain('Sign in with Keycloak');
   });
 
   it('keeps page markup content-only without duplicated shell landmarks', () => {

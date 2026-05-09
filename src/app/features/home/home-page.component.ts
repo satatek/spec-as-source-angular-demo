@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -9,7 +8,7 @@ import { buildHomePageState } from './home-page.models';
 
 @Component({
   selector: 'app-home-page',
-  imports: [MatButtonModule, MatCardModule, MatListModule, MatProgressSpinnerModule],
+  imports: [MatCardModule, MatListModule, MatProgressSpinnerModule],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,9 +22,5 @@ export class HomePageComponent {
 
   constructor() {
     void this.authFacade.ensureProfileLoaded();
-  }
-
-  async signOut(): Promise<void> {
-    await this.authFacade.logout('/');
   }
 }

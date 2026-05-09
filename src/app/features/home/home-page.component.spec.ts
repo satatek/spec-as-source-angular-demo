@@ -63,7 +63,7 @@ describe('HomePageComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Welcome, Casey Rivers.');
     expect(compiled.textContent).toContain('casey@example.com');
-    expect(compiled.textContent).toContain('Log off');
+    expect(compiled.textContent).not.toContain('Log off');
     expect(compiled.textContent).toContain('funny and happy things happening in the demo');
   });
 
@@ -75,17 +75,6 @@ describe('HomePageComponent', () => {
     expect(compiled.querySelector('header')).toBeNull();
     expect(compiled.querySelector('footer')).toBeNull();
     expect(compiled.querySelector('nav')).toBeNull();
-  });
-
-  it('starts logout from the authenticated detail page', async () => {
-    const fixture = TestBed.createComponent(HomePageComponent);
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('button[mat-flat-button]') as HTMLButtonElement;
-    button.click();
-    await fixture.whenStable();
-
-    expect(logout).toHaveBeenCalledWith('/');
   });
 
   it('shows a fallback warning when profile data is incomplete', () => {
@@ -118,9 +107,6 @@ describe('HomePageComponent', () => {
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    const button = compiled.querySelector('button[mat-flat-button]') as HTMLButtonElement;
-
-    expect(button.disabled).toBe(true);
     expect(compiled.textContent).toContain('Signing you out and returning to the welcome page');
     expect(compiled.textContent).not.toContain('Your sign out could not be completed. Please try again.');
   });
@@ -136,9 +122,6 @@ describe('HomePageComponent', () => {
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    const button = compiled.querySelector('button[mat-flat-button]') as HTMLButtonElement;
-
-    expect(button.disabled).toBe(false);
     expect(compiled.textContent).toContain('Your sign out could not be completed. Please try again.');
   });
 });

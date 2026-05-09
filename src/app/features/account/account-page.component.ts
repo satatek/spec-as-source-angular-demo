@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -8,7 +7,7 @@ import { AuthFacade } from '../../core/auth/auth.facade';
 
 @Component({
   selector: 'app-account-page',
-  imports: [MatButtonModule, MatCardModule, MatListModule, MatProgressSpinnerModule],
+  imports: [MatCardModule, MatListModule, MatProgressSpinnerModule],
   templateUrl: './account-page.component.html',
   styleUrl: './account-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,9 +37,5 @@ export class AccountPageComponent {
 
   constructor() {
     void this.authFacade.ensureProfileLoaded();
-  }
-
-  async signOut(): Promise<void> {
-    await this.authFacade.logout('/');
   }
 }

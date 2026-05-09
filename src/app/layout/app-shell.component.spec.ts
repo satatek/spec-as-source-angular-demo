@@ -114,7 +114,7 @@ describe('AppShellComponent', () => {
     fixture.detectChanges();
 
     const compiledBefore = fixture.nativeElement as HTMLElement;
-    expect(compiledBefore.textContent).toContain('Welcome');
+    expect(compiledBefore.textContent).not.toContain('Welcome');
     expect(compiledBefore.textContent).not.toContain('Home');
 
     isAuthenticated.set(true);

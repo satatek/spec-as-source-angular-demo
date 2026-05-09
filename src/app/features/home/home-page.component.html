@@ -6,17 +6,6 @@
       You are logged in, so now we can show the funny and happy things happening in the demo.
     </p>
 
-    <div class="actions">
-      <button
-        mat-flat-button
-        type="button"
-        (click)="signOut()"
-        [disabled]="!viewState().canLogoff"
-      >
-        Log off
-      </button>
-    </div>
-
     @if (isProfileLoading()) {
       <div class="loading-state" role="status" aria-live="polite">
         <mat-spinner diameter="40" />
