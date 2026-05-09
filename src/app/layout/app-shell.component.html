@@ -1,0 +1,50 @@
+<div class="layout-shell">
+  <header class="layout-shell__header">
+    <mat-toolbar>
+      @if (isMobile()) {
+        <button
+          mat-icon-button
+          type="button"
+          (click)="toggleSidenav()"
+          aria-label="Toggle navigation menu"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
+
+      <span class="layout-shell__brand">Satatek Demo</span>
+    </mat-toolbar>
+  </header>
+
+  <mat-sidenav-container class="layout-shell__container">
+    <mat-sidenav
+      class="layout-shell__sidenav"
+      [mode]="sidenavMode()"
+      [opened]="sidenavOpened()"
+      [disableClose]="!isMobile()"
+    >
+      <nav aria-label="Primary navigation">
+        <mat-nav-list>
+          @for (item of navigationItems(); track trackByLabel($index, item)) {
+            <a mat-list-item [routerLink]="item.route" routerLinkActive="active-link" (click)="closeSidenavOnNavigate()">
+              @if (item.icon; as icon) {
+                <mat-icon matListItemIcon>{{ icon }}</mat-icon>
+              }
+              <span matListItemTitle>{{ item.label }}</span>
+            </a>
+          }
+        </mat-nav-list>
+      </nav>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <main class="layout-shell__content">
+        <router-outlet />
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <footer class="layout-shell__footer">
+    <small>Reusable application shell</small>
+  </footer>
+</div>

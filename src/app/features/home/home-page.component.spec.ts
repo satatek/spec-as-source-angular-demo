@@ -66,6 +66,16 @@ describe('HomePageComponent', () => {
     expect(compiled.textContent).toContain('Log off');
   });
 
+  it('keeps page markup content-only without duplicated shell landmarks', () => {
+    const fixture = TestBed.createComponent(HomePageComponent);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('header')).toBeNull();
+    expect(compiled.querySelector('footer')).toBeNull();
+    expect(compiled.querySelector('nav')).toBeNull();
+  });
+
   it('starts logout from the authenticated detail page', async () => {
     const fixture = TestBed.createComponent(HomePageComponent);
     fixture.detectChanges();

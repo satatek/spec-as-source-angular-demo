@@ -80,6 +80,16 @@ describe('WelcomePageComponent', () => {
     expect(login).toHaveBeenCalledWith('/home');
   });
 
+  it('keeps page markup content-only without duplicated shell landmarks', () => {
+    const fixture = TestBed.createComponent(WelcomePageComponent);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('header')).toBeNull();
+    expect(compiled.querySelector('footer')).toBeNull();
+    expect(compiled.querySelector('nav')).toBeNull();
+  });
+
   it('renders a recoverable status message when sign-in fails', () => {
     session.set({
       ...session(),

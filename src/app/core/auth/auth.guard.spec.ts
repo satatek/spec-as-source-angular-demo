@@ -3,12 +3,13 @@ import { ActivatedRouteSnapshot, provideRouter, Router, RouterStateSnapshot } fr
 import Keycloak from 'keycloak-js';
 
 import { canActivateAuthenticatedRoute } from './auth.guard';
+import { routes } from '../../app.routes';
 
 describe('canActivateAuthenticatedRoute', () => {
   it('allows navigation when the Keycloak session is authenticated', async () => {
     TestBed.configureTestingModule({
       providers: [
-        provideRouter([]),
+        provideRouter(routes),
         {
           provide: Keycloak,
           useValue: {
@@ -30,7 +31,7 @@ describe('canActivateAuthenticatedRoute', () => {
   it('redirects anonymous requests for the home route back to the welcome page', async () => {
     TestBed.configureTestingModule({
       providers: [
-        provideRouter([]),
+        provideRouter(routes),
         {
           provide: Keycloak,
           useValue: {
