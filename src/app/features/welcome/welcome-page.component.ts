@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -21,6 +21,8 @@ export class WelcomePageComponent {
 
   readonly facade = inject(WelcomePageFacade);
   readonly redirectTarget = sanitizeAppRedirectTarget(this.route.snapshot.queryParamMap.get('redirectTo'));
+  readonly isChecking = this.facade.isChecking;
+  readonly showStatusBanner = computed(() => this.facade.errorMessage() !== null);
 
   constructor() {
     effect(() => {

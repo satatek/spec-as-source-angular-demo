@@ -63,6 +63,35 @@ describe('WelcomePageComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('friendly demo page');
     expect(compiled.textContent).not.toContain('Sign in with Keycloak');
+    expect(compiled.querySelector('[data-testid="welcome-page"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="welcome-hero-card"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="welcome-details-card"]')).not.toBeNull();
+  });
+
+  it('keeps themed structure order with hero content before details content', () => {
+    const fixture = TestBed.createComponent(WelcomePageComponent);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const cards = compiled.querySelectorAll('mat-card');
+    expect(cards).toHaveLength(2);
+    expect(cards[0]?.getAttribute('data-testid')).toBe('welcome-hero-card');
+    expect(cards[1]?.getAttribute('data-testid')).toBe('welcome-details-card');
+  });
+
+  it('uses Material theme tokens in component styles and avoids legacy hardcoded colors', () => {
+    const fixture = TestBed.createComponent(WelcomePageComponent);
+    fixture.detectChanges();
+
+    const styles = Array.from(document.querySelectorAll('style'))
+      .map((styleElement) => styleElement.textContent ?? '')
+      .join('\n');
+
+    expect(styles).toContain('--mat-sys-surface');
+    expect(styles).toContain('--mat-sys-on-surface');
+    expect(styles).not.toContain('#f7f8fc');
+    expect(styles).not.toContain('#eef2f7');
+    expect(styles).not.toContain('#5b5bd6');
   });
 
   it('keeps page markup content-only without duplicated shell landmarks', () => {
@@ -88,6 +117,23 @@ describe('WelcomePageComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Sign-in did not complete.');
     expect(compiled.textContent).toContain('Keycloak login was cancelled.');
+
+    const statusBanner = compiled.querySelector('[data-testid="welcome-status-banner"]');
+    expect(statusBanner?.getAttribute('role')).toBe('status');
+    expect(statusBanner?.getAttribute('aria-live')).toBe('polite');
+  });
+
+  it('shows progress bar while session status is checking', () => {
+    session.set({
+      ...session(),
+      status: 'checking',
+    });
+
+    const fixture = TestBed.createComponent(WelcomePageComponent);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('[data-testid="welcome-progress"]')).not.toBeNull();
   });
 
   it('redirects authenticated users to the home page', async () => {
@@ -104,5 +150,55 @@ describe('WelcomePageComponent', () => {
     TestBed.createComponent(WelcomePageComponent).detectChanges();
 
     expect(navigateSpy).toHaveBeenCalledWith('/home');
+  });
+
+  it('redirects authenticated users to a safe query redirect target', () => {
+    TestBed.resetTestingModule();
+
+    const navigateByUrl = vi.fn().mockResolvedValue(true);
+    const localSession = signal({
+      status: 'authenticated',
+      isAuthenticated: true,
+      loginUrlRequested: false,
+      lastErrorMessage: null as string | null,
+      redirectTarget: '/home',
+    });
+
+    TestBed.configureTestingModule({
+      imports: [WelcomePageComponent],
+      providers: [
+        provideRouter([]),
+        {
+          provide: Router,
+          useValue: {
+            navigateByUrl,
+          },
+        },
+        {
+          provide: WelcomePageFacade,
+          useValue: {
+            session: localSession,
+            isAuthenticated: signal(true),
+            isChecking: () => false,
+            errorMessage: () => null,
+            dismissError: vi.fn(),
+          },
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              queryParamMap: {
+                get: (key: string) => (key === 'redirectTo' ? 'https://example.com/evil' : null),
+              },
+            },
+          },
+        },
+      ],
+    });
+
+    TestBed.createComponent(WelcomePageComponent).detectChanges();
+
+    expect(navigateByUrl).toHaveBeenCalledWith('/home');
   });
 });

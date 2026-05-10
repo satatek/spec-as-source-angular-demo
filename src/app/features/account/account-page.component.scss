@@ -1,30 +1,38 @@
 .account-page {
+  min-height: 100vh;
   display: grid;
-  gap: 1rem;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: minmax(0, 42rem);
+  justify-content: center;
+  align-content: start;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  background: var(--mat-sys-surface);
 }
 
 .account-card,
 .profile-card {
   display: grid;
   gap: 0.75rem;
+  border-radius: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--mat-sys-surface-container-low);
+  color: var(--mat-sys-on-surface);
+  border-color: var(--mat-sys-outline-variant);
 }
 
 .eyebrow {
-  margin: 0;
+  margin: 0 0 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.8rem;
-  color: #6b7c93;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--mat-sys-primary);
 }
 
 .supporting-copy {
-  margin: 0;
-  color: #4d617d;
-}
-
-.actions {
-  display: flex;
-  gap: 0.75rem;
+  margin: 1rem 0 0;
+  color: var(--mat-sys-on-surface-variant);
+  line-height: 1.6;
 }
 
 .loading-state,
@@ -32,4 +40,30 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+.loading-state {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.warning-state {
+  margin-top: 0.75rem;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface-container-high);
+  color: var(--mat-sys-on-surface);
+}
+
+h1,
+h2 {
+  margin: 0;
+  color: var(--mat-sys-on-surface);
+}
+
+@media (max-width: 640px) {
+  .account-page {
+    padding: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

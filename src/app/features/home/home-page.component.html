@@ -1,35 +1,49 @@
-<section class="home-page">
-  <mat-card class="summary-card" appearance="outlined">
+<section class="home-page" data-testid="home-page">
+  <mat-card class="summary-card" appearance="outlined" data-testid="home-summary-card">
     <p class="eyebrow">Protected route</p>
     <h1>{{ viewState().greeting }}</h1>
-    <p class="supporting-copy">
+    <p class="supporting-copy" data-testid="home-supporting-copy">
       You are logged in, so now we can show the funny and happy things happening in the demo.
     </p>
 
     @if (isProfileLoading()) {
-      <div class="loading-state" role="status" aria-live="polite">
+      <section
+        class="loading-state"
+        role="status"
+        aria-live="polite"
+        data-testid="home-profile-loading-state"
+      >
         <mat-spinner diameter="40" />
         <span>Loading your Keycloak profile…</span>
-      </div>
+      </section>
     }
 
     @if (viewState().isLogoffInProgress) {
-      <div class="loading-state" role="status" aria-live="polite">
+      <section
+        class="loading-state"
+        role="status"
+        aria-live="polite"
+        data-testid="home-logoff-loading-state"
+      >
         <mat-spinner diameter="32" />
         <span>Signing you out and returning to the welcome page…</span>
-      </div>
+      </section>
     }
 
     @if (viewState().profileWarning; as warning) {
-      <div class="warning-state" role="status" aria-live="polite">{{ warning }}</div>
+      <section class="warning-state" role="status" aria-live="polite" data-testid="home-profile-warning">
+        {{ warning }}
+      </section>
     }
 
     @if (viewState().logoffErrorMessage; as logoffErrorMessage) {
-      <div class="warning-state" role="status" aria-live="polite">{{ logoffErrorMessage }}</div>
+      <section class="warning-state" role="status" aria-live="polite" data-testid="home-logoff-warning">
+        {{ logoffErrorMessage }}
+      </section>
     }
   </mat-card>
 
-  <mat-card class="profile-card" appearance="outlined">
+  <mat-card class="profile-card" appearance="outlined" data-testid="home-profile-card">
     <h2>Profile details</h2>
 
     <mat-list>
