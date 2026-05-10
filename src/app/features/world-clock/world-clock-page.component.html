@@ -19,36 +19,41 @@
   </header>
 
   <!-- Loading State -->
-  <div *ngIf="pageState().isLoading" class="loading-container">
-    <mat-spinner diameter="40"></mat-spinner>
-    <p>Loading world times...</p>
-  </div>
+  @if (pageState().isLoading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading world times...</p>
+    </div>
+  }
 
   <!-- Error State -->
-  <div *ngIf="pageState().error" class="error-container" role="alert">
-    <mat-icon>error_outline</mat-icon>
-    <p>{{ pageState().error }}</p>
-  </div>
+  @if (pageState().error) {
+    <div class="error-container" role="alert">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ pageState().error }}</p>
+    </div>
+  }
 
   <!-- Clock Entries Grid (US1 Core - display three times) -->
-  <div 
-    *ngIf="!pageState().isLoading && !pageState().error"
-    class="clocks-grid"
-    [style.--grid-columns]="gridColumns()">
-    
-    <app-world-clock-entry
-      *ngFor="let entry of pageState().entries"
-      [entry]="entry"
-      [format]="currentFormat()">
-    </app-world-clock-entry>
-  </div>
+  @if (!pageState().isLoading && !pageState().error) {
+    <div
+      class="clocks-grid"
+      [style.--grid-columns]="gridColumns()">
 
-  <!-- Last Update Info (US2 - T041 verification) -->
-  <div 
-    *ngIf="!pageState().isLoading && !pageState().error"
-    class="update-info"
-    role="status"
-    aria-live="polite">
-    Last updated: {{ pageState().lastUpdated | date: 'HH:mm:ss' }}
-  </div>
+      @for (entry of pageState().entries; track entry.id) {
+        <app-world-clock-entry
+          [entry]="entry"
+          [format]="currentFormat()">
+        </app-world-clock-entry>
+      }
+    </div>
+
+    <!-- Last Update Info (US2 - T041 verification) -->
+    <div
+      class="update-info"
+      role="status"
+      aria-live="polite">
+      Last updated: {{ pageState().lastUpdated | date: 'HH:mm:ss' }}
+    </div>
+  }
 </div>

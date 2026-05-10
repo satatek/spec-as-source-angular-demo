@@ -6,24 +6,28 @@
   class="clock-card">
   
   <mat-card-header>
-    <h3 class="region-name">{{ entry.region }}</h3>
-    <p class="city-name">{{ entry.city }}</p>
+    <mat-card-title class="region-name">{{ entry.region }}</mat-card-title>
+    <mat-card-subtitle class="city-name">{{ entry.city }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
     <!-- Digital Clock Display (format === 'digital') -->
-    <div *ngIf="format === 'digital'" 
-         class="digital-clock" 
-         aria-live="polite"
-         [attr.aria-label]="'Current time: ' + formattedTime()">
-      {{ formattedTime() }}
-    </div>
+    @if (format === 'digital') {
+      <div
+        class="digital-clock"
+        aria-live="polite"
+        [attr.aria-label]="'Current time: ' + formattedTime()">
+        {{ formattedTime() }}
+      </div>
+    }
 
     <!-- Analog Clock Display (format === 'analog') -->
-    <div *ngIf="format === 'analog'" class="analog-clock" aria-hidden="true">
-      <!-- Placeholder for analog clock SVG (T057-T060 optional) -->
-      <div class="analog-placeholder">Analog</div>
-    </div>
+    @if (format === 'analog') {
+      <div class="analog-clock" aria-hidden="true">
+        <!-- Placeholder for analog clock SVG (T057-T060 optional) -->
+        <div class="analog-placeholder">Analog</div>
+      </div>
+    }
 
     <!-- UTC Offset Label -->
     <p class="utc-offset">{{ utcOffsetDisplay() }}</p>
