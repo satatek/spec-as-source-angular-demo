@@ -12,6 +12,26 @@
       "children": null
     },
     {
+      "id": "welcome",
+      "label": "Welcome",
+      "route": "/",     
+      "icon": "handshake",
+      "requiresAuth": false,
+      "visibleWhenAuthenticated": false,
+      "order": 11,
+      "children": null
+    },
+    {
+      "id": "world_clock",
+      "label": "World Clock",
+      "route": "/world-clock",     
+      "icon": "public",
+      "requiresAuth": false,
+      "visibleWhenAuthenticated": true,
+      "order": 12,
+      "children": null
+    },
+    {
       "id": "ocpi_modules",
       "label": "OCPI Modules",
       "route": null,
@@ -138,16 +158,6 @@
           "order": 30
         }
       ]
-    },
-    {
-      "id": "welcome",
-      "label": "Welcome",
-      "route": "/welcome",     
-      "icon": "handshake",
-      "requiresAuth": false,
-      "visibleWhenAuthenticated": false,
-      "order": 20,
-      "children": null
     }
   ]
 }
