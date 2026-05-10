@@ -129,5 +129,5 @@ export class WorldClockPageComponent {
    * Accessibility: descriptive title for page
    */
   readonly pageTitle = 'World Clock';
-  readonly pageDescription = 'Display of current time across Brazil, United Kingdom, and China';
+  readonly pageDescription = 'Display of current time across key global regions';
 }

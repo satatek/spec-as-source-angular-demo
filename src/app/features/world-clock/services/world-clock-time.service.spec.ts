@@ -17,12 +17,20 @@ describe('WorldClockTimeService', () => {
     service = TestBed.inject(WorldClockTimeService);
   });
 
-  it('should return exactly 3 clock entries (T010)', async () => {
+  it('should return exactly 9 clock entries (T010)', async () => {
     const entries = await firstValueFrom(service.getCurrentTimes());
-    expect(entries.length).toBe(3);
+    expect(entries.length).toBe(9);
     expect(entries[0].id).toBe('brazil');
     expect(entries[1].id).toBe('uk');
     expect(entries[2].id).toBe('china');
+
+    const ids = entries.map((entry) => entry.id);
+    expect(ids).toContain('usa');
+    expect(ids).toContain('india');
+    expect(ids).toContain('japan');
+    expect(ids).toContain('germany');
+    expect(ids).toContain('australia');
+    expect(ids).toContain('uae');
   });
 
   it('should have valid entry structure with all required fields (T010)', async () => {
