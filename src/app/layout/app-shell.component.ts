@@ -36,6 +36,8 @@ type MenuLoadStatus = 'loading' | 'ready' | 'error';
 })
 export class AppShellComponent {
   private readonly authFacade = inject(AuthFacade);
+
+    readonly appVersion = '0.0.0';
   private readonly breakpointObserver = inject(BreakpointObserver);
   private readonly router = inject(Router);
   private readonly menuConfigLoader = inject(ShellMenuConfigLoader);

@@ -10,8 +10,8 @@
 }
 
 .layout-shell__header {
-  border-bottom: 1px solid #d9e1ec;
-  background: #ffffff;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface);
 }
 
 .layout-shell__menu-toggle {
@@ -43,19 +43,19 @@
 
 .layout-shell__container {
   min-height: 0;
-  background: #f5f8fc;
+  background: var(--mat-sys-surface-container-low);
 }
 
 .layout-shell__sidenav {
   width: 16rem;
-  border-right: 1px solid #d9e1ec;
-  background: #f7f9fd;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface-container);
 }
 
 .layout-shell__menu-state {
   padding: 0.75rem 1rem;
-  color: #4d617d;
-  font-size: 0.875rem;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-body-medium);
 }
 
 .layout-shell__parent-item {
@@ -83,10 +83,18 @@
 }
 
 .layout-shell__footer {
-  border-top: 1px solid #d9e1ec;
-  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface);
   padding: 0.75rem 1rem;
-  color: #4d617d;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.layout-shell__footer-version {
+  color: var(--mat-sys-on-surface-variant);
+  opacity: 0.7;
 }
 
 .active-link {

@@ -30,14 +30,13 @@
       } @else {
         <button
           mat-stroked-button
-          type="button"
-          [matMenuTriggerFor]="profileMenu"
+          type="button"         
           class="layout-shell__profile-trigger"
           aria-label="Open sign in menu"
+          (click)="signIn()"
         >
           <mat-icon>{{ headerProfileState().iconName }}</mat-icon>
           <span class="layout-shell__profile-label">Sign in</span>
-          <mat-icon>expand_more</mat-icon>
         </button>
       }
     </mat-toolbar>
@@ -90,8 +89,7 @@
               >
                 @if (item.icon; as icon) {                  
                   <mat-icon matListItemIcon>{{ icon }}</mat-icon>
-                }
-                  <mat-icon matListItemIcon  
+                }                  <mat-icon matListItemIcon  
                       [fontIcon]="isParentExpanded(item.id) ? 'expand_less' : 'expand_more'"
                       aria-hidden="true"
                     ></mat-icon>
@@ -137,6 +135,7 @@
   </mat-sidenav-container>
 
   <footer class="layout-shell__footer">
-    <small>Reusable application shell</small>
+    <small>satake.me</small>
+    <small class="layout-shell__footer-version">v{{ appVersion }}</small>
   </footer>
 </div>
