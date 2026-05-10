@@ -81,6 +81,24 @@
           "requiresAuth": true,
           "visibleWhenAuthenticated": true,
           "order": 70
+        },
+        {
+          "id": "tariffs",
+          "label": "Tariffs",
+          "route": "/getnet",
+          "icon": "price_change",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 80
+        },
+        {
+          "id": "hub_client_info",
+          "label": "Hub Client Info",
+          "route": "/getnet",
+          "icon": "hub",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 90
         }
       ]
     },
