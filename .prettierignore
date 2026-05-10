@@ -4,6 +4,8 @@ build/
 .angular/
 coverage/
 package-lock.json
+yarn.lock
+pnpm-lock.yaml
 public/
 playwright-report/
 test-results/

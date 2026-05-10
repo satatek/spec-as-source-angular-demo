@@ -6,21 +6,34 @@ import { BehaviorSubject, of } from 'rxjs';
 import { vi } from 'vitest';
 
 import { AuthFacade } from '../core/auth/auth.facade';
+import { CLOCK_MIN_WIDTH_QUERY, MOBILE_BREAKPOINT_QUERY } from './header-clock.constants';
 import { KeycloakProfileViewModel } from '../core/auth/profile.models';
 import { AppShellComponent } from './app-shell.component';
 import { ShellMenuConfigLoader } from './shell-menu-config.loader';
 import { SidebarMenuItem, SidebarMenuLoadResult } from './shell-menu.models';
 
 class BreakpointObserverStub {
-  private readonly state$ = new BehaviorSubject<BreakpointState>({
-    matches: false,
-    breakpoints: {},
-  });
+  private readonly queries = new Map<string, BehaviorSubject<BreakpointState>>();
 
-  observe = vi.fn(() => this.state$.asObservable());
+  observe = vi.fn((query: string) => this.ensureQuery(query).asObservable());
 
-  setMatches(matches: boolean): void {
-    this.state$.next({ matches, breakpoints: {} });
+  setMatches(query: string, matches: boolean): void {
+    this.ensureQuery(query).next({ matches, breakpoints: { [query]: matches } });
+  }
+
+  private ensureQuery(query: string): BehaviorSubject<BreakpointState> {
+    if (!this.queries.has(query)) {
+      const defaultMatches = query.includes('min-width');
+      this.queries.set(
+        query,
+        new BehaviorSubject<BreakpointState>({
+          matches: defaultMatches,
+          breakpoints: { [query]: defaultMatches },
+        })
+      );
+    }
+
+    return this.queries.get(query)!;
   }
 }
 
@@ -184,7 +197,7 @@ describe('AppShellComponent', () => {
     const fixture = TestBed.createComponent(AppShellComponent);
     const breakpointObserver = TestBed.inject(BreakpointObserver) as unknown as BreakpointObserverStub;
 
-    breakpointObserver.setMatches(true);
+    breakpointObserver.setMatches(MOBILE_BREAKPOINT_QUERY, true);
     fixture.detectChanges();
 
     expect(fixture.componentInstance.layoutState()).toMatchObject({
@@ -314,7 +327,7 @@ describe('AppShellComponent', () => {
     const breakpointObserver = TestBed.inject(BreakpointObserver) as unknown as BreakpointObserverStub;
     const router = TestBed.inject(Router);
 
-    breakpointObserver.setMatches(true);
+    breakpointObserver.setMatches(MOBILE_BREAKPOINT_QUERY, true);
     fixture.componentInstance.toggleSidenav();
     fixture.detectChanges();
 
@@ -337,11 +350,14 @@ describe('AppShellComponent', () => {
     const fixture = TestBed.createComponent(AppShellComponent);
     const breakpointObserver = TestBed.inject(BreakpointObserver) as unknown as BreakpointObserverStub;
 
-    breakpointObserver.setMatches(true);
+    breakpointObserver.setMatches(MOBILE_BREAKPOINT_QUERY, true);
+    breakpointObserver.setMatches(CLOCK_MIN_WIDTH_QUERY, false);
     fixture.componentInstance.toggleSidenav();
     fixture.detectChanges();
 
-    fixture.componentInstance.toggleParent('account');
+    if (!fixture.componentInstance.isParentExpanded('account')) {
+      fixture.componentInstance.toggleParent('account');
+    }
     fixture.detectChanges();
 
     const childLink = fixture.nativeElement.querySelector('.layout-shell__nested-list a[mat-list-item]') as HTMLAnchorElement;
@@ -352,5 +368,30 @@ describe('AppShellComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.componentInstance.layoutState().opened).toBe(false);
+  });
+
+  it('shows centered clock with timezone on tablet and desktop widths', () => {
+    const fixture = TestBed.createComponent(AppShellComponent);
+    const breakpointObserver = TestBed.inject(BreakpointObserver) as unknown as BreakpointObserverStub;
+
+    breakpointObserver.setMatches(CLOCK_MIN_WIDTH_QUERY, true);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const clock = compiled.querySelector('[data-testid="header-clock"]');
+
+    expect(clock).not.toBeNull();
+    expect(clock?.textContent).toMatch(/\d{2}:\d{2}:\d{2}/);
+  });
+
+  it('hides clock below the 768px threshold', () => {
+    const fixture = TestBed.createComponent(AppShellComponent);
+    const breakpointObserver = TestBed.inject(BreakpointObserver) as unknown as BreakpointObserverStub;
+
+    breakpointObserver.setMatches(CLOCK_MIN_WIDTH_QUERY, false);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('[data-testid="header-clock"]')).toBeNull();
   });
 });

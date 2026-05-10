@@ -14,6 +14,11 @@
   background: var(--mat-sys-surface);
 }
 
+.layout-shell__toolbar {
+  position: relative;
+  min-height: 4rem;
+}
+
 .layout-shell__menu-toggle {
   margin-right: 0.5rem;
 }
@@ -24,6 +29,40 @@
 
 .layout-shell__spacer {
   flex: 1 1 auto;
+}
+
+.layout-shell__clock-slot {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: min(40vw, 18rem);
+}
+
+.layout-shell__clock {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  background: color-mix(in srgb, var(--mat-sys-surface-container-high) 82%, transparent);
+  color: var(--mat-sys-on-surface);
+  font-family: 'Roboto Mono', 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.layout-shell__clock-time {
+  font: var(--mat-sys-title-medium);
+  letter-spacing: 0.05em;
+}
+
+.layout-shell__clock-timezone {
+  font: var(--mat-sys-label-medium);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .layout-shell__profile-trigger {
@@ -99,6 +138,12 @@
 
 .active-link {
   font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .layout-shell__clock-slot {
+    display: none;
+  }
 }
 
 @media (max-width: 959px) {
