@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -11,6 +11,8 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } fro
 import { filter } from 'rxjs';
 
 import { AuthFacade } from '../core/auth/auth.facade';
+import { CLOCK_MIN_WIDTH_QUERY, MOBILE_BREAKPOINT_QUERY } from './header-clock.constants';
+import { HeaderClockService } from './header-clock.service';
 import { ShellMenuConfigLoader } from './shell-menu-config.loader';
 import { SidebarMenuChildItem, SidebarMenuItem } from './shell-menu.models';
 import { APP_LAYOUT_SECTIONS, filterMenuItemsForAuth, ShellLayoutState } from './shell-navigation.models';
@@ -36,8 +38,9 @@ type MenuLoadStatus = 'loading' | 'ready' | 'error';
 })
 export class AppShellComponent {
   private readonly authFacade = inject(AuthFacade);
+  private readonly headerClockService = inject(HeaderClockService);
 
-    readonly appVersion = '0.0.0';
+  readonly appVersion = '0.0.0';
   private readonly breakpointObserver = inject(BreakpointObserver);
   private readonly router = inject(Router);
   private readonly menuConfigLoader = inject(ShellMenuConfigLoader);
@@ -45,6 +48,7 @@ export class AppShellComponent {
 
   readonly layoutSections = APP_LAYOUT_SECTIONS;
   readonly isMobile = signal(false);
+  readonly showClock = signal(true);
   readonly sidenavOpened = signal(true);
   readonly rawMenuItems = signal<SidebarMenuItem[]>([]);
   readonly expandedParentIds = signal<string[]>([]);
@@ -59,6 +63,9 @@ export class AppShellComponent {
     opened: this.sidenavOpened(),
     isMobile: this.isMobile(),
   }));
+  readonly headerClock = toSignal(this.headerClockService.clockViewModel$, {
+    initialValue: this.headerClockService.getClockViewModel(),
+  });
   readonly navigationItems = computed(() =>
     filterMenuItemsForAuth(this.rawMenuItems(), this.authFacade.isAuthenticated())
   );
@@ -67,11 +74,18 @@ export class AppShellComponent {
     this.loadNavigationMenu();
 
     this.breakpointObserver
-      .observe('(max-width: 959px)')
+      .observe(MOBILE_BREAKPOINT_QUERY)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((state) => {
         this.isMobile.set(state.matches);
         this.sidenavOpened.set(!state.matches);
+      });
+
+    this.breakpointObserver
+      .observe(CLOCK_MIN_WIDTH_QUERY)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((state) => {
+        this.showClock.set(state.matches);
       });
 
     this.router.events

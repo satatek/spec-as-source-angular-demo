@@ -1,6 +1,6 @@
 <div class="layout-shell">
   <header class="layout-shell__header">
-    <mat-toolbar>
+    <mat-toolbar class="layout-shell__toolbar">
       <button
         mat-icon-button
         type="button"
@@ -12,6 +12,15 @@
       </button>
 
       <span class="layout-shell__brand">Tools Portal</span>
+
+      @if (showClock()) {
+        <div class="layout-shell__clock-slot" data-testid="header-clock-slot">
+          <span class="layout-shell__clock" aria-label="Current time and timezone" data-testid="header-clock">
+            <span class="layout-shell__clock-time">{{ headerClock().timeText }}</span>
+            <span class="layout-shell__clock-timezone">{{ headerClock().timezoneText }}</span>
+          </span>
+        </div>
+      }
 
       <span class="layout-shell__spacer"></span>
 
@@ -30,7 +39,7 @@
       } @else {
         <button
           mat-stroked-button
-          type="button"         
+          type="button"
           class="layout-shell__profile-trigger"
           aria-label="Open sign in menu"
           (click)="signIn()"
@@ -79,7 +88,7 @@
 
         <mat-nav-list>
           @for (item of navigationItems(); track trackByMenuItemId($index, item)) {
-            @if (item.children !== null && item.children.length > 0) {
+            @if (item.children !== null && item.children.length > 0) {              
               <button
                 mat-list-item
                 type="button"
@@ -87,13 +96,16 @@
                 [attr.aria-expanded]="isParentExpanded(item.id)"
                 (click)="toggleParent(item.id)"
               >
-                @if (item.icon; as icon) {                  
+
+                @if (item.icon; as icon) {
                   <mat-icon matListItemIcon>{{ icon }}</mat-icon>
-                }                  <mat-icon matListItemIcon  
+                }                
+                <mat-icon matListItemIcon  
                       [fontIcon]="isParentExpanded(item.id) ? 'expand_less' : 'expand_more'"
                       aria-hidden="true"
-                    ></mat-icon>
-                <span matListItemTitle>{{ item.label }}</span>            
+                ></mat-icon>                
+                
+                <span matListItemTitle>{{ item.label }}</span>
               </button>
 
               @if (isParentExpanded(item.id)) {
