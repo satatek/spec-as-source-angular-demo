@@ -11,10 +11,6 @@ export class WelcomePageFacade {
   readonly isChecking = computed(() => this.session().status === 'checking');
   readonly errorMessage = computed(() => this.session().lastErrorMessage);
 
-  async login(redirectTarget = '/home'): Promise<void> {
-    await this.authFacade.login(redirectTarget);
-  }
-
   dismissError(): void {
     this.authFacade.clearError();
   }

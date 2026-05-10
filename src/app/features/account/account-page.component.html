@@ -1,25 +1,26 @@
-<section class="account-page">
-  <mat-card class="account-card" appearance="outlined">
+<section class="account-page" data-testid="account-page">
+  <mat-card class="account-card" appearance="outlined" data-testid="account-summary-card">
     <p class="eyebrow">Account profile</p>
     <h1>Your logged-in profile</h1>
-    <p class="supporting-copy">
+    <p class="supporting-copy" data-testid="account-supporting-copy">
       This page keeps login, logoff, and identity details together in one simple place.
     </p>
 
     @if (isProfileLoading()) {
-      <div class="loading-state" role="status" aria-live="polite">
+      <section class="loading-state" role="status" aria-live="polite" data-testid="account-loading-state">
         <mat-spinner diameter="32" />
         <span>Loading your profile information…</span>
-      </div>
+      </section>
     }
 
     @if (viewState().feedbackMessage; as feedbackMessage) {
-      <div class="warning-state" role="status" aria-live="polite">{{ feedbackMessage }}</div>
+      <section class="warning-state" role="status" aria-live="polite" data-testid="account-warning-state">
+        {{ feedbackMessage }}
+      </section>
     }
-
   </mat-card>
 
-  <mat-card class="profile-card" appearance="outlined">
+  <mat-card class="profile-card" appearance="outlined" data-testid="account-profile-card">
     <h2>Profile details</h2>
     <mat-list>
       @for (field of viewState().profileFields; track field.label) {

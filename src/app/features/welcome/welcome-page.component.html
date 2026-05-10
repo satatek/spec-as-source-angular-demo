@@ -1,27 +1,31 @@
-<section class="welcome-page">
-  <mat-card class="hero-card" appearance="outlined">
+<section class="welcome-page" data-testid="welcome-page">
+  <mat-card class="hero-card" appearance="outlined" data-testid="welcome-hero-card">
     <p class="eyebrow">Angular 21 + Keycloak</p>
     <h1>Welcome to the Demo Page</h1>
-    <p class="supporting-copy">
+    <p class="supporting-copy" data-testid="welcome-supporting-copy">
       This is the friendly demo page. Start authentication here and then explore the happy little
       things waiting on the home page.
     </p>
 
-    @if (facade.errorMessage(); as errorMessage) {
-      <div class="status-banner" role="status" aria-live="polite">
+    @if (showStatusBanner() && facade.errorMessage(); as errorMessage) {
+      <section
+        class="status-banner"
+        role="status"
+        aria-live="polite"
+        data-testid="welcome-status-banner"
+      >
         <strong>Sign-in did not complete.</strong>
         <span>{{ errorMessage }}</span>
         <button mat-stroked-button type="button" (click)="facade.dismissError()">Dismiss</button>
-      </div>
+      </section>
     }
 
-    @if (facade.isChecking()) {
-      <mat-progress-bar mode="indeterminate" />
+    @if (isChecking()) {
+      <mat-progress-bar mode="indeterminate" data-testid="welcome-progress" />
     }
-
   </mat-card>
 
-  <mat-card class="details-card" appearance="outlined">
+  <mat-card class="details-card" appearance="outlined" data-testid="welcome-details-card">
     <h2>What happens next</h2>
     <ol>
       <li>The app checks whether a Keycloak session already exists.</li>

@@ -65,6 +65,24 @@ describe('HomePageComponent', () => {
     expect(compiled.textContent).toContain('casey@example.com');
     expect(compiled.textContent).not.toContain('Log off');
     expect(compiled.textContent).toContain('funny and happy things happening in the demo');
+    expect(compiled.querySelector('[data-testid="home-page"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="home-summary-card"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="home-profile-card"]')).not.toBeNull();
+  });
+
+  it('uses Material theme tokens in component styles and avoids legacy hardcoded colors', () => {
+    const fixture = TestBed.createComponent(HomePageComponent);
+    fixture.detectChanges();
+
+    const styles = Array.from(document.querySelectorAll('style'))
+      .map((styleElement) => styleElement.textContent ?? '')
+      .join('\n');
+
+    expect(styles).toContain('--mat-sys-surface');
+    expect(styles).toContain('--mat-sys-on-surface');
+    expect(styles).not.toContain('#f5f7fb');
+    expect(styles).not.toContain('#0f766e');
+    expect(styles).not.toContain('#7a5200');
   });
 
   it('keeps page markup content-only without duplicated shell landmarks', () => {
@@ -94,6 +112,23 @@ describe('HomePageComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Some profile fields are not available from Keycloak');
     expect(compiled.textContent).toContain('Not provided');
+
+    const warning = compiled.querySelector('[data-testid="home-profile-warning"]');
+    expect(warning?.getAttribute('role')).toBe('status');
+    expect(warning?.getAttribute('aria-live')).toBe('polite');
+  });
+
+  it('shows a polite loading state while profile is loading', () => {
+    isProfileLoading.set(true);
+
+    const fixture = TestBed.createComponent(HomePageComponent);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const loading = compiled.querySelector('[data-testid="home-profile-loading-state"]');
+    expect(loading).not.toBeNull();
+    expect(loading?.getAttribute('role')).toBe('status');
+    expect(loading?.getAttribute('aria-live')).toBe('polite');
   });
 
   it('shows retryable logout feedback and disables the action while sign-out is in progress', () => {
@@ -123,5 +158,9 @@ describe('HomePageComponent', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Your sign out could not be completed. Please try again.');
+
+    const warning = compiled.querySelector('[data-testid="home-logoff-warning"]');
+    expect(warning?.getAttribute('role')).toBe('status');
+    expect(warning?.getAttribute('aria-live')).toBe('polite');
   });
 });
