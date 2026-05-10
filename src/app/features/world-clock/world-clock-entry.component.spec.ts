@@ -30,6 +30,7 @@ describe('WorldClockEntryComponent', () => {
     component.entry = mockEntry;
     component.format = 'digital';
     component.use24Hour = true;
+    component.showDialMarks = true;
   });
 
   it('should render region name and city name correctly (T021)', () => {
@@ -75,5 +76,29 @@ describe('WorldClockEntryComponent', () => {
     const utcOffset = fixture.nativeElement.querySelector('.utc-offset');
 
     expect(utcOffset.textContent).toContain('UTC-5');
+  });
+
+  it('should render analog dial with markers and numerals when enabled', () => {
+    component.format = 'analog';
+    component.showDialMarks = true;
+    fixture.detectChanges();
+
+    const markers = fixture.nativeElement.querySelector('.analog-clock__markers');
+    const numerals = fixture.nativeElement.querySelector('.analog-clock__numerals');
+
+    expect(markers).toBeTruthy();
+    expect(numerals).toBeTruthy();
+  });
+
+  it('should render clean analog dial without markers and numerals when disabled', () => {
+    component.format = 'analog';
+    component.showDialMarks = false;
+    fixture.detectChanges();
+
+    const markers = fixture.nativeElement.querySelector('.analog-clock__markers');
+    const numerals = fixture.nativeElement.querySelector('.analog-clock__numerals');
+
+    expect(markers).toBeNull();
+    expect(numerals).toBeNull();
   });
 });

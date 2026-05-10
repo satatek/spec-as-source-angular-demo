@@ -19,14 +19,27 @@
       </button>
 
       <!-- Hour Format Toggle Button (24h / AM-PM) -->
-      <button
-        mat-icon-button
-        (click)="toggleHourFormat()"
-        [attr.aria-label]="'Switch to ' + (use24Hour() ? 'AM/PM' : '24-hour') + ' time format'"
-        class="format-toggle"
-      >
-        <mat-icon>{{ use24Hour() ? 'av_timer' : 'timer' }}</mat-icon>
-      </button>
+      @if (currentFormat() === 'digital') {
+        <button
+          mat-icon-button
+          (click)="toggleHourFormat()"
+          [attr.aria-label]="'Switch to ' + (use24Hour() ? 'AM/PM' : '24-hour') + ' time format'"
+          class="format-toggle"
+        >
+          <mat-icon>{{ use24Hour() ? 'av_timer' : 'timer' }}</mat-icon>
+        </button>
+      }
+
+      @if (currentFormat() === 'analog') {
+        <button
+          mat-icon-button
+          (click)="toggleDialStyle()"
+          [attr.aria-label]="'Switch to ' + (showDialMarks() ? 'clean analog dial' : 'marked analog dial')"
+          class="format-toggle"
+        >
+          <mat-icon>{{ showDialMarks() ? 'radio_button_unchecked' : 'grid_on' }}</mat-icon>
+        </button>
+      }
     </div>
   </header>
 
@@ -56,7 +69,8 @@
         <app-world-clock-entry
           [entry]="entry"
           [format]="currentFormat()"
-          [use24Hour]="use24Hour()">
+          [use24Hour]="use24Hour()"
+          [showDialMarks]="showDialMarks()">
         </app-world-clock-entry>
       }
     </div>

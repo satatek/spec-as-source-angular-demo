@@ -55,6 +55,7 @@ export class WorldClockPageComponent {
    */
   readonly currentFormat = signal<ClockFormat>('digital');
   readonly use24Hour = signal(true);
+  readonly showDialMarks = signal(true);
 
   /**
    * Responsive layout signal
@@ -123,6 +124,10 @@ export class WorldClockPageComponent {
 
   toggleHourFormat(): void {
     this.use24Hour.update((value) => !value);
+  }
+
+  toggleDialStyle(): void {
+    this.showDialMarks.update((value) => !value);
   }
 
   /**

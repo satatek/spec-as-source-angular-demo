@@ -22,6 +22,7 @@ export class WorldClockEntryComponent {
   @Input() entry!: WorldClockEntry;
   @Input() format!: ClockFormat;
   @Input() use24Hour = true;
+  @Input() showDialMarks = true;
 
   /**
    * formattedTime: Computed signal returning formatted time string (HH:MM:SS)

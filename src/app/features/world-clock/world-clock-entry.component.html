@@ -26,6 +26,31 @@
       <div class="analog-clock" aria-label="Current analog time" role="img">
         <svg class="analog-clock__svg" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
           <circle class="analog-clock__face" cx="100" cy="100" r="94"></circle>
+
+          @if (showDialMarks) {
+            <g class="analog-clock__markers">
+              <line class="analog-clock__marker analog-clock__marker--major" x1="100" y1="16" x2="100" y2="28"></line>
+              <line class="analog-clock__marker" x1="100" y1="16" x2="100" y2="24" transform="rotate(30 100 100)"></line>
+              <line class="analog-clock__marker" x1="100" y1="16" x2="100" y2="24" transform="rotate(60 100 100)"></line>
+              <line class="analog-clock__marker analog-clock__marker--major" x1="100" y1="16" x2="100" y2="28" transform="rotate(90 100 100)"></line>
+              <line class="analog-clock__marker" x1="100" y1="16" x2="100" y2="24" transform="rotate(120 100 100)"></line>
+              <line class="analog-clock__marker" x1="100" y1="16" x2="100" y2="24" transform="rotate(150 100 100)"></line>
+              <line class="analog-clock__marker analog-clock__marker--major" x1="100" y1="16" x2="100" y2="28" transform="rotate(180 100 100)"></line>
+              <line class="analog-clock__marker" x1="100" y1="16" x2="100" y2="24" transform="rotate(210 100 100)"></line>
+              <line class="analog-clock__marker" x1="100" y1="16" x2="100" y2="24" transform="rotate(240 100 100)"></line>
+              <line class="analog-clock__marker analog-clock__marker--major" x1="100" y1="16" x2="100" y2="28" transform="rotate(270 100 100)"></line>
+              <line class="analog-clock__marker" x1="100" y1="16" x2="100" y2="24" transform="rotate(300 100 100)"></line>
+              <line class="analog-clock__marker" x1="100" y1="16" x2="100" y2="24" transform="rotate(330 100 100)"></line>
+            </g>
+
+            <g class="analog-clock__numerals" aria-hidden="true">
+              <text x="100" y="44" text-anchor="middle" dominant-baseline="middle">12</text>
+              <text x="156" y="100" text-anchor="middle" dominant-baseline="middle">3</text>
+              <text x="100" y="156" text-anchor="middle" dominant-baseline="middle">6</text>
+              <text x="44" y="100" text-anchor="middle" dominant-baseline="middle">9</text>
+            </g>
+          }
+
           <circle class="analog-clock__center" cx="100" cy="100" r="4"></circle>
 
           <line

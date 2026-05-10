@@ -83,6 +83,16 @@ describe('WorldClockPageComponent', () => {
     expect(component.use24Hour()).toBe(true);
   });
 
+  it('should toggle analog dial style between marked and clean', () => {
+    expect(component.showDialMarks()).toBe(true);
+
+    component.toggleDialStyle();
+    expect(component.showDialMarks()).toBe(false);
+
+    component.toggleDialStyle();
+    expect(component.showDialMarks()).toBe(true);
+  });
+
   it('should have correct initial format (T036)', () => {
     expect(component.currentFormat()).toBe('digital');
   });
@@ -92,5 +102,20 @@ describe('WorldClockPageComponent', () => {
     const heading = fixture.nativeElement.querySelector('h1');
     expect(heading).toBeTruthy();
     expect(heading.textContent).toContain('World Clock');
+  });
+
+  it('should show PM/24H action only in digital mode and dial-style action only in analog mode', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.textContent).toContain('World Clock');
+    expect(compiled.querySelector('[aria-label*="time format"]')).toBeTruthy();
+    expect(compiled.querySelector('[aria-label*="analog dial"]')).toBeNull();
+
+    component.toggleFormat();
+    fixture.detectChanges();
+
+    expect(compiled.querySelector('[aria-label*="time format"]')).toBeNull();
+    expect(compiled.querySelector('[aria-label*="analog dial"]')).toBeTruthy();
   });
 });

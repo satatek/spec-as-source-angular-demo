@@ -71,6 +71,27 @@
     fill: var(--mat-sys-on-surface);
   }
 
+  .analog-clock__marker {
+    stroke: var(--mat-sys-outline);
+    stroke-width: 1.5;
+    opacity: 0.75;
+  }
+
+  .analog-clock__marker--major {
+    stroke: var(--mat-sys-on-surface-variant);
+    stroke-width: 2.25;
+    opacity: 0.95;
+  }
+
+  .analog-clock__numerals {
+    fill: var(--mat-sys-on-surface-variant);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    user-select: none;
+  }
+
   .analog-clock__hand {
     transform-origin: 100px 100px;
     transition: transform 220ms linear;
