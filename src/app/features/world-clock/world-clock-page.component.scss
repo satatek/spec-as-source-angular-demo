@@ -33,6 +33,12 @@
     margin: 0;
   }
 
+  .header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .format-toggle {
     color: var(--mat-sys-primary);
     background-color: var(--mat-sys-primary-container);
@@ -99,13 +105,6 @@
   }
 }
 
-.update-info {
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--mat-sys-on-background-variant);
-  margin-top: 1rem;
-}
-
 /* Responsive: Small screens (< 600px) */
 @media (max-width: 599px) {
   .page-header {
@@ -116,7 +115,7 @@
       width: 100%;
     }
 
-    .format-toggle {
+    .header-actions {
       align-self: flex-end;
     }
   }

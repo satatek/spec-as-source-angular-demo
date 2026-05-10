@@ -29,6 +29,7 @@ describe('WorldClockEntryComponent', () => {
     component = fixture.componentInstance;
     component.entry = mockEntry;
     component.format = 'digital';
+    component.use24Hour = true;
   });
 
   it('should render region name and city name correctly (T021)', () => {
@@ -42,11 +43,20 @@ describe('WorldClockEntryComponent', () => {
 
   it('should render formatted time in digital format (T021)', () => {
     component.format = 'digital';
+    component.use24Hour = true;
     fixture.detectChanges();
     const digitalClock = fixture.nativeElement.querySelector('.digital-clock');
 
     expect(digitalClock).toBeTruthy();
     expect(digitalClock.textContent).toMatch(/\d{2}:\d{2}:\d{2}/);
+  });
+
+  it('should render AM/PM marker when 12-hour mode is selected', () => {
+    component.use24Hour = false;
+    fixture.detectChanges();
+    const digitalClock = fixture.nativeElement.querySelector('.digital-clock');
+
+    expect(digitalClock.textContent).toMatch(/AM|PM/i);
   });
 
   it('should have ARIA labels for accessibility (T022)', () => {

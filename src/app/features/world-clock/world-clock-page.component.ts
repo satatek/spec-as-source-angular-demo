@@ -54,6 +54,7 @@ export class WorldClockPageComponent {
    * (T042-T043 US2 feature - format toggle)
    */
   readonly currentFormat = signal<ClockFormat>('digital');
+  readonly use24Hour = signal(true);
 
   /**
    * Responsive layout signal
@@ -118,6 +119,10 @@ export class WorldClockPageComponent {
    */
   toggleFormat(): void {
     this.currentFormat.set(this.currentFormat() === 'digital' ? 'analog' : 'digital');
+  }
+
+  toggleHourFormat(): void {
+    this.use24Hour.update((value) => !value);
   }
 
   /**

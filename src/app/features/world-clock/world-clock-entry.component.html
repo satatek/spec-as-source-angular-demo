@@ -23,9 +23,38 @@
 
     <!-- Analog Clock Display (format === 'analog') -->
     @if (format === 'analog') {
-      <div class="analog-clock" aria-hidden="true">
-        <!-- Placeholder for analog clock SVG (T057-T060 optional) -->
-        <div class="analog-placeholder">Analog</div>
+      <div class="analog-clock" aria-label="Current analog time" role="img">
+        <svg class="analog-clock__svg" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+          <circle class="analog-clock__face" cx="100" cy="100" r="94"></circle>
+          <circle class="analog-clock__center" cx="100" cy="100" r="4"></circle>
+
+          <line
+            class="analog-clock__hand analog-clock__hand--hour"
+            x1="100"
+            y1="100"
+            x2="100"
+            y2="62"
+            [style.transform]="'rotate(' + hourHandRotation() + 'deg)'"
+          ></line>
+
+          <line
+            class="analog-clock__hand analog-clock__hand--minute"
+            x1="100"
+            y1="100"
+            x2="100"
+            y2="42"
+            [style.transform]="'rotate(' + minuteHandRotation() + 'deg)'"
+          ></line>
+
+          <line
+            class="analog-clock__hand analog-clock__hand--second"
+            x1="100"
+            y1="108"
+            x2="100"
+            y2="30"
+            [style.transform]="'rotate(' + secondHandRotation() + 'deg)'"
+          ></line>
+        </svg>
       </div>
     }
 

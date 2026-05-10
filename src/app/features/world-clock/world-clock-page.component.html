@@ -8,14 +8,26 @@
       <p class="subtitle">{{ pageDescription }}</p>
     </div>
     
-    <!-- Format Toggle Button (US2 - T042-T043) -->
-    <button 
-      mat-icon-button 
-      (click)="toggleFormat()"
-      [attr.aria-label]="'Switch to ' + (currentFormat() === 'digital' ? 'analog' : 'digital') + ' format'"
-      class="format-toggle">
-      <mat-icon>{{ currentFormat() === 'digital' ? 'schedule' : 'access_time' }}</mat-icon>
-    </button>
+    <div class="header-actions">
+      <!-- Format Toggle Button (US2 - T042-T043) -->
+      <button
+        mat-icon-button
+        (click)="toggleFormat()"
+        [attr.aria-label]="'Switch to ' + (currentFormat() === 'digital' ? 'analog' : 'digital') + ' format'"
+        class="format-toggle">
+        <mat-icon>{{ currentFormat() === 'digital' ? 'schedule' : 'access_time' }}</mat-icon>
+      </button>
+
+      <!-- Hour Format Toggle Button (24h / AM-PM) -->
+      <button
+        mat-icon-button
+        (click)="toggleHourFormat()"
+        [attr.aria-label]="'Switch to ' + (use24Hour() ? 'AM/PM' : '24-hour') + ' time format'"
+        class="format-toggle"
+      >
+        <mat-icon>{{ use24Hour() ? 'av_timer' : 'timer' }}</mat-icon>
+      </button>
+    </div>
   </header>
 
   <!-- Loading State -->
@@ -43,17 +55,10 @@
       @for (entry of pageState().entries; track entry.id) {
         <app-world-clock-entry
           [entry]="entry"
-          [format]="currentFormat()">
+          [format]="currentFormat()"
+          [use24Hour]="use24Hour()">
         </app-world-clock-entry>
       }
-    </div>
-
-    <!-- Last Update Info (US2 - T041 verification) -->
-    <div
-      class="update-info"
-      role="status"
-      aria-live="polite">
-      Last updated: {{ pageState().lastUpdated | date: 'HH:mm:ss' }}
     </div>
   }
 </div>

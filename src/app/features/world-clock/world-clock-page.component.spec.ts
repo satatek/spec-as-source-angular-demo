@@ -73,6 +73,16 @@ describe('WorldClockPageComponent', () => {
     expect(component.currentFormat()).toBe('digital');
   });
 
+  it('should toggle hour format between 24-hour and AM/PM', () => {
+    expect(component.use24Hour()).toBe(true);
+
+    component.toggleHourFormat();
+    expect(component.use24Hour()).toBe(false);
+
+    component.toggleHourFormat();
+    expect(component.use24Hour()).toBe(true);
+  });
+
   it('should have correct initial format (T036)', () => {
     expect(component.currentFormat()).toBe('digital');
   });
