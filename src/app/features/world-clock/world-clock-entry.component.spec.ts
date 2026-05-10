@@ -1,0 +1,69 @@
+/**
+ * World Clock Entry Component Tests (T021-T023)
+ */
+
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { WorldClockEntryComponent } from './world-clock-entry.component';
+import { WorldClockEntry } from './models/world-clock.models';
+
+describe('WorldClockEntryComponent', () => {
+  let component: WorldClockEntryComponent;
+  let fixture: ComponentFixture<WorldClockEntryComponent>;
+
+  const mockEntry: WorldClockEntry = {
+    id: 'test',
+    region: 'Test Region',
+    city: 'Test City',
+    timeZoneId: 'America/New_York',
+    locale: 'en-US',
+    currentTime: new Date(),
+    utcOffset: -300,
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [WorldClockEntryComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(WorldClockEntryComponent);
+    component = fixture.componentInstance;
+    component.entry = mockEntry;
+    component.format = 'digital';
+  });
+
+  it('should render region name and city name correctly (T021)', () => {
+    fixture.detectChanges();
+    const regionName = fixture.nativeElement.querySelector('.region-name');
+    const cityName = fixture.nativeElement.querySelector('.city-name');
+
+    expect(regionName.textContent).toContain('Test Region');
+    expect(cityName.textContent).toContain('Test City');
+  });
+
+  it('should render formatted time in digital format (T021)', () => {
+    component.format = 'digital';
+    fixture.detectChanges();
+    const digitalClock = fixture.nativeElement.querySelector('.digital-clock');
+
+    expect(digitalClock).toBeTruthy();
+    expect(digitalClock.textContent).toMatch(/\d{2}:\d{2}:\d{2}/);
+  });
+
+  it('should have ARIA labels for accessibility (T022)', () => {
+    fixture.detectChanges();
+    const card = fixture.nativeElement.querySelector('mat-card');
+    const digitalClock = fixture.nativeElement.querySelector('.digital-clock');
+
+    expect(card.getAttribute('role')).toBe('region');
+    expect(card.getAttribute('aria-label')).toContain('Test Region');
+    expect(card.getAttribute('aria-label')).toContain('Test City');
+    expect(digitalClock.getAttribute('aria-live')).toBe('polite');
+  });
+
+  it('should display UTC offset correctly', () => {
+    fixture.detectChanges();
+    const utcOffset = fixture.nativeElement.querySelector('.utc-offset');
+
+    expect(utcOffset.textContent).toContain('UTC-5');
+  });
+});

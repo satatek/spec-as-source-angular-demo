@@ -1,0 +1,54 @@
+<!-- World Clock Page Component Template (T025-T035) -->
+
+<div class="world-clock-page">
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="header-content">
+      <h1>{{ pageTitle }}</h1>
+      <p class="subtitle">{{ pageDescription }}</p>
+    </div>
+    
+    <!-- Format Toggle Button (US2 - T042-T043) -->
+    <button 
+      mat-icon-button 
+      (click)="toggleFormat()"
+      [attr.aria-label]="'Switch to ' + (currentFormat() === 'digital' ? 'analog' : 'digital') + ' format'"
+      class="format-toggle">
+      <mat-icon>{{ currentFormat() === 'digital' ? 'schedule' : 'access_time' }}</mat-icon>
+    </button>
+  </header>
+
+  <!-- Loading State -->
+  <div *ngIf="pageState().isLoading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading world times...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="pageState().error" class="error-container" role="alert">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ pageState().error }}</p>
+  </div>
+
+  <!-- Clock Entries Grid (US1 Core - display three times) -->
+  <div 
+    *ngIf="!pageState().isLoading && !pageState().error"
+    class="clocks-grid"
+    [style.--grid-columns]="gridColumns()">
+    
+    <app-world-clock-entry
+      *ngFor="let entry of pageState().entries"
+      [entry]="entry"
+      [format]="currentFormat()">
+    </app-world-clock-entry>
+  </div>
+
+  <!-- Last Update Info (US2 - T041 verification) -->
+  <div 
+    *ngIf="!pageState().isLoading && !pageState().error"
+    class="update-info"
+    role="status"
+    aria-live="polite">
+    Last updated: {{ pageState().lastUpdated | date: 'HH:mm:ss' }}
+  </div>
+</div>

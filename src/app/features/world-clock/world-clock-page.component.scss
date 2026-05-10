@@ -1,0 +1,130 @@
+/* World Clock Page Component Styles (T026-T035) */
+
+.world-clock-page {
+  min-height: 100vh;
+  padding: clamp(1rem, 5%, 3rem);
+  background-color: var(--mat-sys-background);
+  color: var(--mat-sys-on-background);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: clamp(2rem, 8%, 4rem);
+  gap: 2rem;
+  flex-wrap: wrap;
+
+  .header-content {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  h1 {
+    font-size: clamp(1.875rem, 8vw, 2.5rem);
+    font-weight: 500;
+    margin: 0 0 0.5rem 0;
+    color: var(--mat-sys-on-background);
+  }
+
+  .subtitle {
+    font-size: clamp(0.875rem, 2vw, 1.125rem);
+    color: var(--mat-sys-on-background-variant);
+    margin: 0;
+  }
+
+  .format-toggle {
+    color: var(--mat-sys-primary);
+    background-color: var(--mat-sys-primary-container);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: var(--mat-sys-on-primary-container);
+    }
+  }
+}
+
+.clocks-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns, 3), 1fr);
+  gap: clamp(1rem, 3%, 2rem);
+  margin-bottom: 2rem;
+  justify-items: stretch;
+
+  app-world-clock-entry {
+    width: 100%;
+  }
+}
+
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 10%, 4rem);
+  border-radius: 8px;
+  background-color: var(--mat-sys-surface-container);
+}
+
+.loading-container {
+  gap: 1rem;
+  color: var(--mat-sys-on-surface);
+
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+  }
+}
+
+.error-container {
+  gap: 1rem;
+  background-color: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+
+  mat-icon {
+    font-size: 2rem;
+    color: var(--mat-sys-error);
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+}
+
+.update-info {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--mat-sys-on-background-variant);
+  margin-top: 1rem;
+}
+
+/* Responsive: Small screens (< 600px) */
+@media (max-width: 599px) {
+  .page-header {
+    flex-direction: column;
+    gap: 1rem;
+
+    .header-content {
+      width: 100%;
+    }
+
+    .format-toggle {
+      align-self: flex-end;
+    }
+  }
+}
+
+/* Responsive: Tablet (600px - 960px) */
+@media (min-width: 600px) and (max-width: 959px) {
+  .page-header {
+    gap: 1rem;
+  }
+}
