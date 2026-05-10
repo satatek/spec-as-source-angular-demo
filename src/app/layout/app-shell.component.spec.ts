@@ -128,6 +128,7 @@ describe('AppShellComponent', () => {
           { path: '', component: AppShellComponent },
           { path: 'home', component: AppShellComponent },
           { path: 'account', component: AppShellComponent },
+          { path: 'world-clock', component: AppShellComponent },
         ]),
         {
           provide: BreakpointObserver,
@@ -382,6 +383,21 @@ describe('AppShellComponent', () => {
 
     expect(clock).not.toBeNull();
     expect(clock?.textContent).toMatch(/\d{2}:\d{2}:\d{2}/);
+  });
+
+  it('renders a globe icon link to world clock next to the header clock', () => {
+    const fixture = TestBed.createComponent(AppShellComponent);
+    const breakpointObserver = TestBed.inject(BreakpointObserver) as unknown as BreakpointObserverStub;
+
+    breakpointObserver.setMatches(CLOCK_MIN_WIDTH_QUERY, true);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const worldClockLink = compiled.querySelector('[data-testid="header-world-clock-link"]') as HTMLAnchorElement;
+
+    expect(worldClockLink).not.toBeNull();
+    expect(worldClockLink.getAttribute('aria-label')).toBe('Open world clock');
+    expect(worldClockLink.getAttribute('href')).toContain('/world-clock');
   });
 
   it('hides clock below the 768px threshold', () => {

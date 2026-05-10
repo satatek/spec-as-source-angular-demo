@@ -15,10 +15,22 @@
 
       @if (showClock()) {
         <div class="layout-shell__clock-slot" data-testid="header-clock-slot">
-          <span class="layout-shell__clock" aria-label="Current time and timezone" data-testid="header-clock">
-            <span class="layout-shell__clock-time">{{ headerClock().timeText }}</span>
-            <span class="layout-shell__clock-timezone">{{ headerClock().timezoneText }}</span>
-          </span>
+          <div class="layout-shell__clock-cluster">
+            <span class="layout-shell__clock" aria-label="Current time and timezone" data-testid="header-clock">
+              <span class="layout-shell__clock-time">{{ headerClock().timeText }}</span>
+              <span class="layout-shell__clock-timezone">{{ headerClock().timezoneText }}</span>
+            </span>
+
+            <a
+              mat-icon-button
+              class="layout-shell__world-clock-link"
+              routerLink="/world-clock"
+              aria-label="Open world clock"
+              data-testid="header-world-clock-link"
+            >
+              <mat-icon>public</mat-icon>
+            </a>
+          </div>
         </div>
       }
 
