@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { routes } from './app.routes';
+import { canActivateAuthenticatedRoute } from './core/auth/auth.guard';
 import { AccountPageComponent } from './features/account/account-page.component';
 import { HomePageComponent } from './features/home/home-page.component';
 import { WelcomePageComponent } from './features/welcome/welcome-page.component';
@@ -32,6 +33,7 @@ describe('app routes', () => {
       component: HomePageComponent,
     });
     expect(routes[0]?.children?.[1]?.canActivate?.length).toBe(1);
+    expect(routes[0]?.children?.[1]?.canActivate?.[0]).toBe(canActivateAuthenticatedRoute);
   });
 
   it('protects the shell account child route and maps it to the account page component', () => {

@@ -2,46 +2,48 @@
 
 <div class="world-clock-page">
   <!-- Page Header -->
-  <header class="page-header">
-    <div class="header-content">
-      <h1>{{ pageTitle }}</h1>
-      <p class="subtitle">{{ pageDescription }}</p>
-    </div>
-    
-    <div class="header-actions">
-      <!-- Format Toggle Button (US2 - T042-T043) -->
-      <button
-        mat-icon-button
-        (click)="toggleFormat()"
-        [attr.aria-label]="'Switch to ' + (currentFormat() === 'digital' ? 'analog' : 'digital') + ' format'"
-        class="format-toggle">
-        <mat-icon>{{ currentFormat() === 'digital' ? 'schedule' : 'access_time' }}</mat-icon>
-      </button>
+  <mat-card class="world-header-card" appearance="outlined" data-testid="world-clock-header-card">
+    <header class="page-header">
+      <div class="header-content">
+        <h1>{{ pageTitle }}</h1>
+        <p class="supporting-copy">{{ pageDescription }}</p>
+      </div>
 
-      <!-- Hour Format Toggle Button (24h / AM-PM) -->
-      @if (currentFormat() === 'digital') {
+      <div class="header-actions">
+        <!-- Format Toggle Button (US2 - T042-T043) -->
         <button
           mat-icon-button
-          (click)="toggleHourFormat()"
-          [attr.aria-label]="'Switch to ' + (use24Hour() ? 'AM/PM' : '24-hour') + ' time format'"
-          class="format-toggle"
-        >
-          <mat-icon>{{ use24Hour() ? 'av_timer' : 'timer' }}</mat-icon>
+          (click)="toggleFormat()"
+          [attr.aria-label]="'Switch to ' + (currentFormat() === 'digital' ? 'analog' : 'digital') + ' format'"
+          class="format-toggle">
+          <mat-icon>{{ currentFormat() === 'digital' ? 'schedule' : 'access_time' }}</mat-icon>
         </button>
-      }
 
-      @if (currentFormat() === 'analog') {
-        <button
-          mat-icon-button
-          (click)="toggleDialStyle()"
-          [attr.aria-label]="'Switch to ' + (showDialMarks() ? 'clean analog dial' : 'marked analog dial')"
-          class="format-toggle"
-        >
-          <mat-icon>{{ showDialMarks() ? 'radio_button_unchecked' : 'grid_on' }}</mat-icon>
-        </button>
-      }
-    </div>
-  </header>
+        <!-- Hour Format Toggle Button (24h / AM-PM) -->
+        @if (currentFormat() === 'digital') {
+          <button
+            mat-icon-button
+            (click)="toggleHourFormat()"
+            [attr.aria-label]="'Switch to ' + (use24Hour() ? 'AM/PM' : '24-hour') + ' time format'"
+            class="format-toggle"
+          >
+            <mat-icon>{{ use24Hour() ? 'av_timer' : 'timer' }}</mat-icon>
+          </button>
+        }
+
+        @if (currentFormat() === 'analog') {
+          <button
+            mat-icon-button
+            (click)="toggleDialStyle()"
+            [attr.aria-label]="'Switch to ' + (showDialMarks() ? 'clean analog dial' : 'marked analog dial')"
+            class="format-toggle"
+          >
+            <mat-icon>{{ showDialMarks() ? 'radio_button_unchecked' : 'grid_on' }}</mat-icon>
+          </button>
+        }
+      </div>
+    </header>
+  </mat-card>
 
   <!-- Loading State -->
   @if (pageState().isLoading) {

@@ -1,75 +1,71 @@
-import { AuthSessionState } from '../../core/auth/auth.models';
-import { KeycloakProfileViewModel } from '../../core/auth/profile.models';
+export type HomeFeatureCollectionStatus = 'ready' | 'empty' | 'error';
 
-export interface HomeProfileField {
-  label: string;
-  value: string;
-  missing?: boolean;
+export interface HomeFeatureCard {
+  readonly id: string;
+  readonly label: string;
+  readonly route: string;
+  readonly icon: string | null;
+  readonly source: 'top-level' | 'child';
+  readonly parentId: string | null;
+  readonly order: number;
 }
 
-export interface HomePageState {
-  greeting: string;
-  profileFields: HomeProfileField[];
-  profileWarning: string | null;
-  canLogoff: boolean;
-  isLogoffInProgress: boolean;
-  logoffErrorMessage: string | null;
+export interface HomeFeatureGroup {
+  readonly id: string;
+  readonly label: string;
+  readonly icon: string | null;
+  readonly order: number;
+  readonly children: ReadonlyArray<HomeFeatureCard>;
+  readonly initiallyExpanded: boolean;
 }
 
-export function buildHomePageState(
-  profile: KeycloakProfileViewModel | null,
-  session: AuthSessionState
-): HomePageState {
-  if (!profile) {
-    return {
-      greeting: 'Welcome back.',
-      profileFields: [],
-      profileWarning: 'We could not load your Keycloak profile yet.',
-      canLogoff: session.status !== 'signing-out',
-      isLogoffInProgress: session.status === 'signing-out',
-      logoffErrorMessage: session.status === 'error' && session.isAuthenticated ? session.lastErrorMessage : null,
-    };
-  }
+export interface HomeFeatureCollectionState {
+  readonly status: HomeFeatureCollectionStatus;
+  readonly directCards: ReadonlyArray<HomeFeatureCard>;
+  readonly groups: ReadonlyArray<HomeFeatureGroup>;
+  readonly errorMessage: string | null;
+  readonly actionErrorMessage: string | null;
+}
 
-  const profileFields: HomeProfileField[] = [
-    createField('Subject', profile.subject),
-    createField('Display name', profile.displayName),
-    createField('Username', profile.username),
-    createField('Email', profile.email),
-    createField('First name', profile.firstName),
-    createField('Last name', profile.lastName),
-    createField(
-      'Email verified',
-      profile.emailVerified === null ? null : profile.emailVerified ? 'Yes' : 'No'
-    ),
-  ];
-
-  const missingCount = profileFields.filter((field) => field.missing).length;
-
+export function createEmptyHomeFeatureCollectionState(
+  actionErrorMessage: string | null = null
+): HomeFeatureCollectionState {
   return {
-    greeting: `Welcome, ${profile.displayName}.`,
-    profileFields,
-    profileWarning:
-      missingCount > 0
-        ? 'Some profile fields are not available from Keycloak for this account.'
-        : null,
-    canLogoff: session.status !== 'signing-out',
-    isLogoffInProgress: session.status === 'signing-out',
-    logoffErrorMessage: session.status === 'error' && session.isAuthenticated ? session.lastErrorMessage : null,
+    status: 'empty',
+    directCards: [],
+    groups: [],
+    errorMessage: null,
+    actionErrorMessage,
   };
 }
 
-function createField(label: string, value: string | null): HomeProfileField {
-  if (!value) {
-    return {
-      label,
-      value: 'Not provided',
-      missing: true,
-    };
+export function createErrorHomeFeatureCollectionState(
+  errorMessage: string,
+  actionErrorMessage: string | null = null
+): HomeFeatureCollectionState {
+  return {
+    status: 'error',
+    directCards: [],
+    groups: [],
+    errorMessage,
+    actionErrorMessage,
+  };
+}
+
+export function createReadyHomeFeatureCollectionState(
+  directCards: ReadonlyArray<HomeFeatureCard>,
+  groups: ReadonlyArray<HomeFeatureGroup>,
+  actionErrorMessage: string | null = null
+): HomeFeatureCollectionState {
+  if (directCards.length === 0 && groups.length === 0) {
+    return createEmptyHomeFeatureCollectionState(actionErrorMessage);
   }
 
   return {
-    label,
-    value,
+    status: 'ready',
+    directCards,
+    groups,
+    errorMessage: null,
+    actionErrorMessage,
   };
 }

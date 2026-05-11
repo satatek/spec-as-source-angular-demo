@@ -1,17 +1,25 @@
 /* World Clock Page Component Styles (T026-T035) */
 
 .world-clock-page {
-  min-height: 100vh;
-  padding: clamp(1rem, 5%, 3rem);
-  background-color: var(--mat-sys-background);
-  color: var(--mat-sys-on-background);
+  min-height: 100%;
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  padding: clamp(1rem, 3vw, 2rem);
+  background: var(--mat-sys-surface);
+}
+
+.world-header-card {
+  border-radius: 1.5rem;
+  padding: clamp(1rem, 2.8vw, 1.75rem);
+  background: var(--mat-sys-surface-container-low);
+  color: var(--mat-sys-on-surface);
+  border-color: var(--mat-sys-outline-variant);
 }
 
 .page-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: clamp(2rem, 8%, 4rem);
   gap: 2rem;
   flex-wrap: wrap;
 
@@ -21,16 +29,14 @@
   }
 
   h1 {
-    font-size: clamp(1.875rem, 8vw, 2.5rem);
-    font-weight: 500;
-    margin: 0 0 0.5rem 0;
-    color: var(--mat-sys-on-background);
+    margin: 0;
+    color: var(--mat-sys-on-surface);
   }
 
-  .subtitle {
-    font-size: clamp(0.875rem, 2vw, 1.125rem);
-    color: var(--mat-sys-on-background-variant);
-    margin: 0;
+  .supporting-copy {
+    margin: 1rem 0 0;
+    color: var(--mat-sys-on-surface-variant);
+    line-height: 1.6;
   }
 
   .header-actions {
@@ -59,7 +65,6 @@
   display: grid;
   grid-template-columns: repeat(var(--grid-columns, 3), 1fr);
   gap: clamp(1rem, 3%, 2rem);
-  margin-bottom: 2rem;
   justify-items: stretch;
 
   app-world-clock-entry {
@@ -107,6 +112,10 @@
 
 /* Responsive: Small screens (< 600px) */
 @media (max-width: 599px) {
+  .world-clock-page {
+    padding: 1rem;
+  }
+
   .page-header {
     flex-direction: column;
     gap: 1rem;

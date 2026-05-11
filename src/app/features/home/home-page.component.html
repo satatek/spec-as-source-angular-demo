@@ -1,58 +1,124 @@
 <section class="home-page" data-testid="home-page">
-  <mat-card class="summary-card" appearance="outlined" data-testid="home-summary-card">
-    <p class="eyebrow">Protected route</p>
-    <h1>{{ viewState().greeting }}</h1>
+  <mat-card class="home-header-card" appearance="outlined" data-testid="home-header-card">
+    <h1>{{ greeting() }}</h1>
     <p class="supporting-copy" data-testid="home-supporting-copy">
-      You are logged in, so now we can show the funny and happy things happening in the demo.
+      Explore available features from cards generated from the same source as the side menu.
     </p>
 
-    @if (isProfileLoading()) {
-      <section
-        class="loading-state"
-        role="status"
-        aria-live="polite"
-        data-testid="home-profile-loading-state"
-      >
-        <mat-spinner diameter="40" />
-        <span>Loading your Keycloak profile…</span>
-      </section>
-    }
-
-    @if (viewState().isLogoffInProgress) {
-      <section
-        class="loading-state"
-        role="status"
-        aria-live="polite"
-        data-testid="home-logoff-loading-state"
-      >
-        <mat-spinner diameter="32" />
-        <span>Signing you out and returning to the welcome page…</span>
-      </section>
-    }
-
-    @if (viewState().profileWarning; as warning) {
-      <section class="warning-state" role="status" aria-live="polite" data-testid="home-profile-warning">
-        {{ warning }}
-      </section>
-    }
-
-    @if (viewState().logoffErrorMessage; as logoffErrorMessage) {
-      <section class="warning-state" role="status" aria-live="polite" data-testid="home-logoff-warning">
-        {{ logoffErrorMessage }}
+    @if (viewState().actionErrorMessage; as actionErrorMessage) {
+      <section class="warning-state" role="status" aria-live="polite" data-testid="home-action-error">
+        {{ actionErrorMessage }}
       </section>
     }
   </mat-card>
 
-  <mat-card class="profile-card" appearance="outlined" data-testid="home-profile-card">
-    <h2>Profile details</h2>
+  @if (viewState().status === 'error') {
+    <mat-card class="state-card" appearance="outlined" data-testid="home-error-state">
+      <h2>Navigation unavailable</h2>
+      <p>{{ viewState().errorMessage }}</p>
+    </mat-card>
+  } @else if (viewState().status === 'empty') {
+    <mat-card class="state-card" appearance="outlined" data-testid="home-empty-state">
+      <h2>No features available</h2>
+      <p>There are no visible feature links for this account right now.</p>
+    </mat-card>
+  } @else {
+    <section
+      class="home-feature-sections"
+      aria-label="Available feature cards"
+      data-testid="home-feature-sections"
+    >
+      <section class="card-region" aria-label="Direct features" data-testid="home-direct-features-region">
+        <h2>Direct features</h2>
+        <div class="feature-grid" data-testid="home-feature-grid">
+          @for (card of viewState().directCards; track card.id) {
+            <button
+              class="feature-card"
+              type="button"
+              (click)="navigateTo(card.route)"
+              [attr.aria-label]="'Open ' + card.label"
+              data-testid="home-feature-card"
+            >
+              <span class="feature-card__title">
+                @if (card.icon; as icon) {
+                  <mat-icon>{{ icon }}</mat-icon>
+                }
+                {{ card.label }}
+              </span>
+              <span class="feature-card__route">{{ card.route }}</span>
+            </button>
+          }
+        </div>
+      </section>
 
-    <mat-list>
-      @for (field of viewState().profileFields; track field.label) {
-        <mat-list-item>
-          <div matListItemTitle>{{ field.label }}</div>
-          <div matListItemLine [class.missing]="field.missing">{{ field.value }}</div>
-        </mat-list-item>
-      }
-    </mat-list>
-  </mat-card>
+      <section class="card-region" aria-label="Grouped features" data-testid="home-grouped-features-region">
+        <div class="grouped-header-row">
+          <h2>Grouped features</h2>
+          <div class="grouped-header-actions">
+            <button
+              mat-stroked-button
+              type="button"
+              (click)="homeFeatureAccordion.openAll()"
+              aria-label="Expand all grouped features"
+              data-testid="home-groups-expand-all"
+            >
+              Expand all
+            </button>
+            <button
+              mat-stroked-button
+              type="button"
+              (click)="homeFeatureAccordion.closeAll()"
+              aria-label="Collapse all grouped features"
+              data-testid="home-groups-collapse-all"
+            >
+              Collapse all
+            </button>
+          </div>
+        </div>
+
+        <mat-accordion
+          #homeFeatureAccordion="matAccordion"
+          class="feature-groups"
+          data-testid="home-feature-groups"
+          [multi]="true"
+        >
+          @for (group of viewState().groups; track group.id) {
+            <mat-expansion-panel [expanded]="group.initiallyExpanded" data-testid="home-feature-group-panel">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  @if (group.icon; as icon) {
+                    <mat-icon>{{ icon }}</mat-icon>
+                  }
+                  {{ group.label }}
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{ group.children.length }} links
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div class="feature-grid feature-grid--nested" data-testid="home-group-child-grid">
+                @for (card of group.children; track card.id) {
+                  <button
+                    class="feature-card feature-card--child"
+                    type="button"
+                    (click)="navigateTo(card.route)"
+                    [attr.aria-label]="'Open ' + card.label"
+                    data-testid="home-group-child-card"
+                  >
+                    <span class="feature-card__title">
+                      @if (card.icon; as icon) {
+                        <mat-icon>{{ icon }}</mat-icon>
+                      }
+                      {{ card.label }}
+                    </span>
+                    <span class="feature-card__route">{{ card.route }}</span>
+                  </button>
+                }
+              </div>
+            </mat-expansion-panel>
+          }
+        </mat-accordion>
+      </section>
+    </section>
+  }
 </section>
