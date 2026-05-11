@@ -35,7 +35,7 @@ export class HomePageComponent {
   );
   readonly greeting = computed(() => {
     const displayName = this.authFacade.profile()?.displayName?.trim();
-    return displayName ? `Hello, ${displayName}` : 'Hello';
+    return displayName ? `Hello, ${displayName} !` : 'Hello !';
   });
   readonly viewState = computed(() => {
     if (this.menuStatus() === 'error') {
