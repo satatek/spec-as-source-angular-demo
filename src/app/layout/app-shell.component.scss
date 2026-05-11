@@ -1,6 +1,7 @@
 :host {
   display: block;
   min-height: 100dvh;
+  --layout-shell-footer-height: 1.8rem;
 }
 
 .layout-shell {
@@ -136,15 +137,20 @@
 
 .layout-shell__content {
   padding: 1.25rem;
+  padding-bottom: calc(1.25rem + var(--layout-shell-footer-height));
 }
 
 .layout-shell__footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  min-height: var(--layout-shell-footer-height);
   border-top: 1px solid var(--mat-sys-outline-variant);
   background: var(--mat-sys-surface);
-  padding: 0.75rem 1rem;
+  padding: 0.45rem 0.6rem;
   color: var(--mat-sys-on-surface-variant);
 }
 
@@ -170,5 +176,6 @@
 
   .layout-shell__content {
     padding: 1rem;
+    padding-bottom: calc(1rem + var(--layout-shell-footer-height));
   }
 }
