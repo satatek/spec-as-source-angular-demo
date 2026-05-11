@@ -158,6 +158,34 @@
           "order": 30
         }
       ]
+    },
+    {
+      "id": "maps_plataform",
+      "label": "Maps Plataform",
+      "route": null,
+      "requiresAuth": true,
+      "visibleWhenAuthenticated": true,
+      "order": 40,
+      "children": [
+        {
+          "id": "google_maps",
+          "label": "Google",
+          "route": "/google",
+          "icon": "location_on",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 10
+        },
+        {
+          "id": "here_maps",
+          "label": "Here",
+          "route": "/here",
+          "icon": "fmd_bad",
+          "requiresAuth": true,
+          "visibleWhenAuthenticated": true,
+          "order": 20
+        }
+      ]
     }
   ]
 }
