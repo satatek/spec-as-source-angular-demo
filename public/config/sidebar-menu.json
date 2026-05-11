@@ -123,8 +123,8 @@
       ]
     },
     {
-      "id": "emsp_gatway_payments",
-      "label": "eMSP Gateway Payments",
+      "id": "gatway_payments",
+      "label": "Gateway Payments",
       "route": null,
       "requiresAuth": true,
       "visibleWhenAuthenticated": true,
